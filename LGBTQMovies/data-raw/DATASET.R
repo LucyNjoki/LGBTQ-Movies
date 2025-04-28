@@ -3,6 +3,8 @@
 
 color <- list("steelblue", "darkgreen", "purple")
 
+usethis::use_data(color, overwrite = TRUE)
+
 utils::globalVariables("color")
 
 
