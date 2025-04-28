@@ -5,9 +5,13 @@ library(tidyverse)
 library(lubridate)
 library(rio)
 library(here)
+library(gglgbtq)
 
 ui <- fluidPage(
   titlePanel("LGBT+ Movies Explorer 🌈"),
+  div(
+    style = "height: 200px; width: 100%; background: linear-gradient(to right, #E40303, #FF8C00, #FFED00, #008026, #004DFF, #8B00FF);"
+  ),
   sidebarLayout(
     sidebarPanel(
       selectInput("keyword", "Select Keyword:", 
@@ -146,12 +150,12 @@ server <- function(input, output, session) {
     ggplot(genre_data, 
            aes(x = fct_reorder(as.factor(genre_ids_recoded), n), 
                y = n)) +
-      geom_col(fill = "steelblue") +
+      geom_col(fill = "darkgreen") +
       coord_flip() +
       labs(title = "Most Common Genres", 
            x = "Genre ID", 
-           y = "Count") +
-      theme_minimal()
+           y = "Count")
+      
   })
   
   output$langPlot <- renderPlot({
@@ -159,13 +163,15 @@ server <- function(input, output, session) {
       count(original_language_recoded) %>%
       top_n(10, n) %>%
       ggplot(aes(x = fct_reorder(original_language_recoded, n),
-                 y = n)) +
-      geom_col(fill = "darkgreen") +
+                 y = n,
+                 fill = original_language_recoded)) +
+      geom_col() +
       coord_flip() +
       labs(title = "Top Languages", 
            x = "Language", 
            y = "Movies") +
-     ggthemes::theme_fivethirtyeight()
+      scale_fill_manual(values = palette_lgbtq("progress")) +
+      theme_lgbtq("progress", legend.position = "none")
     
   })
   
