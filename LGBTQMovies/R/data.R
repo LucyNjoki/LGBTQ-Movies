@@ -17,3 +17,14 @@
 #' }
 #' @source Generated for this Shiny app.
 "movies_df"
+
+#'@title Color list
+#'@description A list of colors used in the app.
+#'@format A list with 3 elements:
+#' \describe{
+#'  \item{color1}{Color for gender breakdown.}
+#'  \item{color2}{Color for the language insights.}
+#'  \item{color3}{Color for trend analysis.}
+#'  }
+#' @source Generated for this Shiny app.
+"color"
