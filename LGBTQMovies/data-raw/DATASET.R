@@ -1,7 +1,7 @@
 
 # Colors:
 
-color <- list("steelblue", "darkgreen", "purple")
+color <- list("#305CDE", "#5CE65C", "purple")
 
 usethis::use_data(color, overwrite = TRUE)
 

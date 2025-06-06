@@ -31,7 +31,12 @@ mod_Genre_Breakdown_server <- function(id, data){
       ggplot2::ggplot(genre_data, ggplot2::aes(x = forcats::fct_reorder(as.factor(genre_ids), n), y = n)) +
         ggplot2::geom_col(fill = color[[1]]) +
         ggplot2::coord_flip() +
-        ggplot2::labs(title = "Most Common Genres", x = "Genre ID", y = "Count")
+        ggplot2::labs(title = "Most Common Genres", x = "Genre ID", y = "Count") +
+        ggplot2::theme_classic(base_family = "Helvetica") +
+        ggplot2::theme(
+          text = ggplot2::element_text(color = "#333333"),
+          plot.title = ggplot2::element_text(size = 18, face = "bold", color = "black"),
+        )
     })
   }
 )}

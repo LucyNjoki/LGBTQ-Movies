@@ -26,8 +26,27 @@ mod_Top_Movies_server <- function(id, data){
     output$topMovies <- DT::renderDataTable({
       data() |>
         dplyr::arrange(dplyr::desc(vote_average)) |>
-        dplyr::select(title, vote_average, popularity, release_date)
-    })
+        dplyr::select(title, vote_average, popularity, release_date) |>
+        dplyr::rename(
+          "Title" = title,
+          "Vote avarage" = vote_average,
+          "Popularity" = popularity,
+          "Release date" = release_date
+        )
+    },
+    options = list(
+      pageLength = 10,
+      searching = TRUE,
+      ordering = TRUE,
+      dom = 'tip',
+      columnDefs = list(
+        list(className = 'dt-center', targets = 1:3),
+        list(className = 'dt-left', targets = 0)
+      )
+    ),
+    class = 'stripe hover order-column cell-border',
+    rownames = FALSE
+    )
 
   })
 }
