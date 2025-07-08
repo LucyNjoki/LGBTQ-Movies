@@ -8,6 +8,9 @@ app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
+    tags$head(
+      tags$style(HTML("style.css"))
+    ),
     # Your application UI logic
     fluidPage(
 
@@ -26,18 +29,58 @@ app_ui <- function(request) {
         mainPanel(
           tabsetPanel(
             tabPanel("Overview",
-                     mod_Overview_ui("Overview")),
+                     br(),
+                     tags$div(
+                       mod_Overview_ui("Overview"),
+                       style = "margin-top: 10px;"  # it didnt worked
+                      )
+                     ),
 
             tabPanel("Trends",
-                     mod_Trends_ui("Trends")),
+                     br(),
+                     mod_Trends_ui("Trends"),
+                     br()),
 
             tabPanel("Genre Breakdown",
-                     mod_Genre_Breakdown_ui("Genre_Breakdown")),
+                     br(),
+                     mod_Genre_Breakdown_ui("Genre_Breakdown"),
+                     br()),
 
             tabPanel("Top Movies",
-                     mod_Top_Movies_ui("Top_Movies")),
+                     br(),
+                     mod_Top_Movies_ui("Top_Movies"),
+                     br()),
+
             tabPanel("Language Insights",
-                     mod_Language_Insights_ui("Language_Insights"))
+                     br(),
+                     mod_Language_Insights_ui("Language_Insights"),
+                     br())
+          ),
+          br(),
+          tags$div(
+            style = "
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+              padding: 12px;
+              border-radius: 12px;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            ",
+            tags$div(
+              style = "
+                flex: 1;
+                background-color: white;
+                border-radius: 10px;
+                padding: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+              ",
+              shinychat::chat_ui(
+                'chat',
+                placeholder = "Ask me anything about LGBT+ cinema! 🌈✨",
+                width = "100%"
+              )
+            )
           )
         )
       )

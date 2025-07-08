@@ -32,6 +32,27 @@ app_server <- function(input, output, session) {
     df
   })
 
+  chat <- ellmer::chat_groq(
+    model = "llama-3.3-70b-versatile",
+    api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
+    system_prompt = "You are an expert in LGBT+ movies. Your task is to provide insightful and engaging responses about LGBT+ cinema, including recommendations, historical context, and cultural significance. You should be able to discuss various genres, notable films, and trends within the LGBT+ film industry. Please respond in a friendly and informative manner.",
+    seed = 123,
+    api_args = list(temperature = 0.8)
+  )
+
+  # Implementação do chat usando shinychat
+  observeEvent(input$chat_user_input, {
+    ns <- session$ns
+
+    chat_result <- try(chat$stream_async(input$chat_user_input), silent = TRUE)
+
+    if (inherits(chat_result, "try-error")) {
+      shinychat::chat_append(ns("chat"), "⚠️ Error processing your request. Please try again later")
+    } else {
+      shinychat::chat_append(ns("chat"), chat_result)
+    }
+  })
+
   mod_Overview_server("Overview", data = filteredData)
   mod_Trends_server("Trends", data = filteredData)
   mod_Genre_Breakdown_server("Genre_Breakdown", data = filteredData)

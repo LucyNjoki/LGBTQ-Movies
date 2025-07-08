@@ -1,0 +1,12 @@
+/* style table */
+/* smooth lines */
+table.dataTable.stripe tbody tr:hover {
+  background-color: purple;
+  color: white;
+}
+/* font of table */
+table.dataTable {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 14px;
+  color: #333333;
+}
