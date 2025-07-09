@@ -14,7 +14,7 @@ library(bslib)
 
 # UI
 ui <- fluidPage(
-  theme = bs_theme(bootswatch = "superhero", version = 3),  # 💅 Apply theme here
+  theme = bs_theme(bootswatch = "superhero", version = 3),  # Apply theme here
   # Add custom logo at top
   tags$head(tags$style(HTML("
     .custom-logo {
