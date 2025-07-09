@@ -175,7 +175,8 @@ server <- function(input, output, session) {
   output$topMovies <- renderDataTable({
     filteredData() %>%
       arrange(desc(vote_average)) %>%
-      select(title, vote_average, popularity, release_date)
+      select(title, vote_average, popularity, release_date) |> 
+      distinct()
   })
 }
 
