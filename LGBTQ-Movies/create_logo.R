@@ -73,7 +73,7 @@ base_plot <- ggplot() +
 sticker(
   subplot = base_plot,
   package = "LGBTQ+ Movies",
-  p_size = 16,                    # Larger text
+  p_size = 30,                    # Larger text
   p_color = "#FFB90F",            # Gold text
   s_x = 1, s_y = 0.8,
   s_width = 1.1,
