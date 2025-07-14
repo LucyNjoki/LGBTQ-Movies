@@ -29,7 +29,12 @@ mod_Trends_server <- function(id, data){
         dplyr::count(year) |>
         ggplot2::ggplot(ggplot2::aes(x = year, y = n)) +
         ggplot2::geom_line() + ggplot2::geom_point() +
-        ggplot2::labs(title = "LGBT+ Movie Releases Over Time", x = "Year", y = "Number of Movies")
+        ggplot2::labs(title = "LGBT+ Movie Releases Over Time", x = "Year", y = "Number of Movies") +
+        ggplot2::theme_classic(base_family = "Helvetica") +
+        ggplot2::theme(
+          text = ggplot2::element_text(color = "#333333"),
+          plot.title = ggplot2::element_text(size = 18, face = "bold", color = "black"),
+        )
     })
 
     output$ratingTrend <- renderPlot({
@@ -39,7 +44,12 @@ mod_Trends_server <- function(id, data){
         dplyr::summarise(avg_rating = mean(vote_average, na.rm = TRUE)) |>
         ggplot2::ggplot(ggplot2::aes(x = year, y = avg_rating)) +
         ggplot2::geom_line(color = color[[3]]) + ggplot2::geom_point() +
-        ggplot2::labs(title = "Average Rating by Year", x = "Year", y = "Avg Rating")
+        ggplot2::labs(title = "Average Rating by Year", x = "Year", y = "Avg Rating") +
+        ggplot2::theme_classic(base_family = "Helvetica") +
+        ggplot2::theme(
+          text = ggplot2::element_text(color = "#333333"),
+          plot.title = ggplot2::element_text(size = 18, face = "bold", color = "black"),
+        )
     })
 
   })
