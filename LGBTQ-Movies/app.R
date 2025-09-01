@@ -21,7 +21,7 @@ ui <- fluidPage(
   # Logo at the top
   titlePanel(
     div(
-      img(src = "lgbtq_movies_hex_final.png", height = "50px", style = "margin-right:15px;"),
+      img(src = "lgbtq_movies_hex_final.png", height = "100px", style = "margin-right:15px;"),
       "LGBT+ Movies Explorer",
       style = "display: flex; align-items: center;"
     )
@@ -240,7 +240,8 @@ server <- function(input, output, session) {
   
   # Value boxes
   output$movieCount <- renderValueBox({
-    valueBox(nrow(filteredData()), "Total Movies", icon = icon("film"), color = "blue")
+    valueBox(formatC(nrow(filteredData()), format = "d", big.mark = ","),
+             "Total Movies", icon = icon("film"), color = "blue")
   })
   
   output$avgRating <- renderValueBox({
