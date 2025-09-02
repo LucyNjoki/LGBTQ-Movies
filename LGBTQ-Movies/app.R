@@ -245,7 +245,7 @@ server <- function(input, output, session) {
   })
   
   output$avgRating <- renderValueBox({
-    avg <- round(mean(filteredData()$rating, na.rm = TRUE), 1)
+    avg <- round(mean(filteredData()$vote_average, na.rm = TRUE), 1)
     valueBox(avg, "Average Rating", icon = icon("star"), color = "green")
   })
   
