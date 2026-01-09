@@ -10,9 +10,17 @@
 mod_Trends_ui <- function(id) {
   ns <- NS(id)
   tagList(
+    bslib::card(
+      full_screen = TRUE,
+      bslib::card_header("Average Rating by Year"),
+      plotOutput(ns("releaseTrend"))
+     ),
+    bslib::card(
+      full_screen = TRUE,
+      bslib::card_header("Average Rating by Year"),
+      plotOutput(ns("ratingTrend"))
+    )
 
-    plotOutput(ns("releaseTrend")),
-    plotOutput(ns("ratingTrend"))
   )
 }
 
