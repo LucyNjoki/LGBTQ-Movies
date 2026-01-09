@@ -9,6 +9,7 @@ Authors@R:
 Description: What the package does (one paragraph).
 License: What license is it under?
 Imports: 
+    bslib,
     config,
     dplyr,
     DT,
@@ -17,10 +18,13 @@ Imports:
     golem,
     here,
     lubridate,
+    plotly,
     rio,
     shiny,
     shinydashboard,
-    tidyr
+    tidyr,
+    tidytext,
+    wordcloud2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
