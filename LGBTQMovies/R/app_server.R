@@ -32,6 +32,17 @@ app_server <- function(input, output, session) {
     df
   })
 
+  # Reactive text data
+  textData<- reactive({
+    filteredData()  |>
+      dplyr::select(overview) |>
+      tidytext::unnest_tokens(word, overview) |>
+      dplyr::anti_join(tidytext::stop_words) |>
+      dplyr::count(word, sort = TRUE) |>
+      dplyr::filter(n >= 10) |>
+      dplyr::top_n(80, n)
+  })
+
   chat <- ellmer::chat_groq(
     model = "llama-3.3-70b-versatile",
     api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
@@ -53,7 +64,7 @@ app_server <- function(input, output, session) {
     }
   })
 
-  mod_Overview_server("Overview", data = filteredData)
+  mod_Overview_server("Overview", data = filteredData, text_data = textData)
   mod_Trends_server("Trends", data = filteredData)
   mod_Genre_Breakdown_server("Genre_Breakdown", data = filteredData)
   mod_Top_Movies_server("Top_Movies", data = filteredData)
