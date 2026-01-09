@@ -16,7 +16,7 @@ library(plotly)
 
 # UI
 ui <- fluidPage(
-  theme = bs_theme(bootswatch = "superhero"), 
+  theme = bs_theme(bootswatch = "cyborg"), 
   
   # Logo at the top
   titlePanel(
@@ -35,8 +35,8 @@ ui <- fluidPage(
     sidebarPanel(
       selectInput("keyword", "Select Keyword:",
                   choices = c(
-                    "All", "LGBT", "Gay", "Lesbian", "Transgender", "Bisexual",
-                    "Intersex", "Queer", "Genderqueer", "Non-binary", "Gender", "Asexual"
+                    "All", "LGBT", "gay", "lesbian", "transgender", "bisexual",
+                    "intersex", "queer", "genderqueer", "non-binary", "gender", "asexual"
                   )
       ),
       sliderInput("yearRange", "Release Year:",
@@ -216,15 +216,15 @@ server <- function(input, output, session) {
   })
   
   # Reactive text data
-  text_data <- reactive({
-    filteredData() %>%
-      select(overview) %>%
-      unnest_tokens(word, overview) %>%
-      anti_join(stop_words) %>%
-      count(word, sort = TRUE) %>%
-      filter(n >= 10) %>%
-      top_n(80, n)
-  })
+  # text_data <- reactive({
+  #   filteredData() %>%
+  #     select(overview) %>%
+  #     unnest_tokens(word, overview) %>%
+  #     anti_join(stop_words) %>%
+  #     count(word, sort = TRUE) %>%
+  #     filter(n >= 10) %>%
+  #     top_n(80, n)
+  # })
   
   # Interactive wordcloud2
   output$wordcloud <- renderWordcloud2({
@@ -374,13 +374,27 @@ server <- function(input, output, session) {
       count(genre_ids_recoded) %>%
       mutate(genre = fct_reorder(genre_ids_recoded, n))
     
-    p <- ggplot(genre_data, aes(x = genre, y = n)) +
-      geom_col(fill = "darkgreen") +
+    # p <- ggplot(genre_data, aes(x = genre, y = n)) +
+    #   geom_col(fill = "darkgreen") +
+    #   coord_flip() +
+    #   labs(title = "Most Common Genres", x = "Genre", y = "Count") +
+    #   ggdark::dark_theme_dark()
+    # 
+    # ggplotly(p)
+    
+    p <- ggplot(genre_data, aes(genre, n)) +
+      geom_col(fill = "#2ecc71") +
       coord_flip() +
       labs(title = "Most Common Genres", x = "Genre", y = "Count") +
-      ggdark::dark_theme_dark()
-    
+      ggdark::dark_theme_gray() +
+      theme(
+        panel.grid.major = element_line(color = "gray25"),
+        panel.grid.minor = element_blank()
+      )
+
     ggplotly(p)
+    
+   
   })
   
   
