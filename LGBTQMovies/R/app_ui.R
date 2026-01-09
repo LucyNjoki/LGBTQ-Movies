@@ -14,12 +14,26 @@ app_ui <- function(request) {
     # Your application UI logic
     fluidPage(
 
-      titlePanel("LGBT+ Movies Explorer 🌈"),
+      theme = bslib::bs_theme(bootswatch = "cyborg"),
+
+      titlePanel(
+        div(
+          img(src = "lgbtq_movies_hex_final.png", height = "100px", style = "margin-right:15px;"),
+          "LGBTQ+ Movies Explorer",
+          style = "display: flex; align-items: center;"
+        )
+      ),
+
+      # Rainbow banner
+      div(
+        style = "height: 25px; width: 100%; background: linear-gradient(to right, #E40303, #FF8C00, #FFED00, #008026, #004DFF, #8B00FF);"
+      ),
+
       sidebarLayout(
         sidebarPanel(
           selectInput("keyword", "Select Keyword:",
-                      choices = c("All", "lgbt", "gay", "lesbian", "transgender", "bisexual",
-                                  "intersex", "queer", "genderqueer", "non-binary", "gender", "asexual")),
+                      choices = c("All", "LGBT", "Gay", "Lesbian", "Transgender", "Bisexual",
+                                  "Intersex", "Queer", "Genderqueer", "Non-binary", "Gender", "Asexual")),
           sliderInput("yearRange", "Release Year:",
                       min = 1950, max = 2025, value = c(2000, 2025), sep = ""),
           checkboxInput("showAdult", "Include Adult Movies", value = FALSE),
