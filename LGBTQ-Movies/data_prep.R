@@ -109,4 +109,8 @@ movies_data_clean <- movies_data_clean |>
     "Western" = "37"
   ))
 
-export(movies_data_clean, here("Data", "movieDataCleaned.xlsx"))
+# Change the date format
+movies_data_clean <- movies_data_clean |> 
+  mutate(release_date = ymd(release_date))
+
+rio::export(movies_data_clean, here("Data", "movieDataCleaned.xlsx"))
