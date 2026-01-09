@@ -32,7 +32,8 @@ mod_Top_Movies_server <- function(id, data){
           "Vote avarage" = vote_average,
           "Popularity" = popularity,
           "Release date" = release_date
-        )
+        ) |>
+        dplyr::distinct()
     },
     options = list(
       pageLength = 10,
