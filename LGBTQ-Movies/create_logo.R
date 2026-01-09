@@ -57,7 +57,7 @@ hex_shapes <- bind_rows(lapply(1:nrow(hex_centers), function(i) {
     mutate(group = i, fill = hex_centers$color[i])
 }))
 
-# STEP 3: Compose the plot
+# Compose the plot
 
 base_plot <- ggplot() +
   annotation_custom(flag_grob, xmin = 0.1, xmax = 0.9, ymin = 0.1, ymax = 0.9) +  # Larger flag
@@ -81,5 +81,5 @@ sticker(
   h_color = "#FFB90F",            # Gold border
   spotlight = FALSE,
   dpi = 600,
-  filename = here("LGBTQ-Movies", "Logo", "lgbtq_movies_hex_final.png")
+  filename = here("Logo", "lgbtq_movies_hex_final.png")
 )
