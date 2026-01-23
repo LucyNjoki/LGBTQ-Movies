@@ -11,13 +11,15 @@ mod_Trends_ui <- function(id) {
   ns <- NS(id)
   tagList(
     bslib::card(
+      style = "background-color:white;",
       full_screen = TRUE,
-      bslib::card_header("Average Rating by Year"),
+      bslib::card_header("LGBT+ Movie Releases Over Time", style = "background-color:white;"),
       plotOutput(ns("releaseTrend"))
      ),
     bslib::card(
+      style = "background-color:white;",
       full_screen = TRUE,
-      bslib::card_header("Average Rating by Year"),
+      bslib::card_header("Average Rating by Year", style = "background-color:white;"),
       plotOutput(ns("ratingTrend"))
     )
 
@@ -36,13 +38,9 @@ mod_Trends_server <- function(id, data){
         dplyr::mutate(year = lubridate::year(as.Date(release_date))) |>
         dplyr::count(year) |>
         ggplot2::ggplot(ggplot2::aes(x = year, y = n)) +
-        ggplot2::geom_line() + ggplot2::geom_point() +
-        ggplot2::labs(title = "LGBT+ Movie Releases Over Time", x = "Year", y = "Number of Movies") +
-        ggplot2::theme_classic(base_family = "Helvetica") +
-        ggplot2::theme(
-          text = ggplot2::element_text(color = "#333333"),
-          plot.title = ggplot2::element_text(size = 18, face = "bold", color = "black"),
-        )
+        ggplot2::geom_line(color = color[[1]]) + ggplot2::geom_point(color = color[[1]]) +
+        ggplot2::labs(title = NULL, x = "Year", y = "Number of Movies") +
+        theme_custom_dark(base_size = 12, legend_position = "none")
     })
 
     output$ratingTrend <- renderPlot({
@@ -51,13 +49,9 @@ mod_Trends_server <- function(id, data){
         dplyr::group_by(year) |>
         dplyr::summarise(avg_rating = mean(vote_average, na.rm = TRUE)) |>
         ggplot2::ggplot(ggplot2::aes(x = year, y = avg_rating)) +
-        ggplot2::geom_line(color = color[[3]]) + ggplot2::geom_point() +
-        ggplot2::labs(title = "Average Rating by Year", x = "Year", y = "Avg Rating") +
-        ggplot2::theme_classic(base_family = "Helvetica") +
-        ggplot2::theme(
-          text = ggplot2::element_text(color = "#333333"),
-          plot.title = ggplot2::element_text(size = 18, face = "bold", color = "black"),
-        )
+        ggplot2::geom_line(color = color[[2]]) + ggplot2::geom_point(color = color[[2]]) +
+        ggplot2::labs(title = NULL, x = "Year", y = "Avg Rating") +
+        theme_custom_dark(base_size = 12, legend_position = "none", base_family = "sans")
     })
 
   })

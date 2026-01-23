@@ -72,7 +72,7 @@ theme_custom <- function(
       strip.text = element_text(size = strip_text_size, face = "bold"),
 
       # Lines / points default tweak
-      axis.ticks = element_line(color = "grey70"),
+      axis.ticks = element_blank(),
       panel.spacing = unit(0.5, "lines")
     )
 
@@ -81,7 +81,7 @@ theme_custom <- function(
 }
 
 # Optional: a dark variant
-theme_custom_dark <- function(..., panel_fill = "#1e1e1e", plot_background = "#171717", grid_color = "#2b2b2b") {
+theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#000000", grid_color = "#2b2b2b") {
   theme_custom(..., panel_fill = panel_fill, plot_background = plot_background, grid_color = grid_color) +
     theme(
       text = element_text(colour = "white"),
@@ -89,6 +89,7 @@ theme_custom_dark <- function(..., panel_fill = "#1e1e1e", plot_background = "#1
       axis.title = element_text(colour = "white"),
       panel.grid.major = element_line(color = grid_color),
       panel.grid.minor = element_line(color = grid_color),
-      plot.background = element_rect(fill = plot_background, colour = NA)
+      panel.background = element_rect(fill = panel_fill, color = panel_fill),
+      plot.background  = element_rect(fill = plot_background, color = plot_background)
     )
 }

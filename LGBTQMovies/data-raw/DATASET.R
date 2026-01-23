@@ -1,7 +1,7 @@
 
 # Colors:
 
-color <- list("#305CDE", "#5CE65C", "purple")
+color <- as.list(grDevices::rainbow(7))
 
 usethis::use_data(color, overwrite = TRUE)
 

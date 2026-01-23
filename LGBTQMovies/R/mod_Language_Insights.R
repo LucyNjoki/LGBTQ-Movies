@@ -28,17 +28,36 @@ mod_Language_Insights_server <- function(id, data){
       data() |>
         dplyr::count(original_language) |>
         dplyr::top_n(10, n) |>
-        ggplot2::ggplot(ggplot2::aes(x = forcats::fct_reorder(original_language, n), y = n)) +
-        ggplot2::geom_col(fill = color[[2]]) +
+        dplyr::mutate(original_language = stringr::str_to_upper(original_language)) |>
+        ggplot2::ggplot(
+          ggplot2::aes(
+            x = forcats::fct_reorder(original_language, n),
+            y = n
+          )
+        ) +
+        ggplot2::geom_col(fill = color[[3]]) +
+        ggplot2::geom_text(
+          ggplot2::aes(label = n),
+          hjust = -0.1, color = "white"
+        ) +
+        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.01, 0.1))) +
         ggplot2::coord_flip() +
-        ggplot2::labs(title = "Top Languages", x = "Language", y = "Movies") +
-        ggplot2::theme_classic(base_family = "Helvetica") +
+        ggplot2::labs(
+          title = "Top Languages",
+          x = "Language",
+          y = "Movies"
+        ) +
+        theme_custom_dark(
+          base_size = 12,
+          legend_position = "none",
+          base_family = "sans"
+        ) +
         ggplot2::theme(
-          text = ggplot2::element_text(color = "#333333"),
-          plot.title = ggplot2::element_text(size = 18, face = "bold", color = "black"),
+          axis.text.x = ggplot2::element_blank(),
+          axis.ticks.x = ggplot2::element_blank(),
+          axis.title.x = ggplot2::element_blank()
         )
     })
-
   })
 }
 

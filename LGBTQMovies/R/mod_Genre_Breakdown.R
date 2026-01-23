@@ -28,16 +28,20 @@ mod_Genre_Breakdown_server <- function(id, data){
         tidyr::unnest(genre_ids_recoded) |>    # assuming it's stored as a list/array
         dplyr::count(genre_ids_recoded)
 
-      ggplot2::ggplot(genre_data, ggplot2::aes(x = forcats::fct_reorder(as.factor(genre_ids_recoded), n), y = n)) +
-        ggplot2::geom_col(fill = color[[2]]) +
+      p <- ggplot2::ggplot(genre_data, ggplot2::aes(x = forcats::fct_reorder(as.factor(genre_ids_recoded), n), y = n)) +
+        ggplot2::geom_col(fill = color[[6]]) +
+        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.01, 0.1))) +
         ggplot2::coord_flip() +
-        ggplot2::labs(title = "Most Common Genres", x = "Genre ID", y = "Count") +
-        # ggplot2::theme_classic(base_family = "Helvetica") +
-        # ggplot2::theme(
-        #   text = ggplot2::element_text(color = "#333333"),
-        #   plot.title = ggplot2::element_text(size = 18, face = "bold", color = "black"),
-        # )
-        theme_custom(base_size = 12, base_family = "sans", legend_position = "none")
+        ggplot2::labs(title = "Most Common Genres", x = NULL, y = NULL) +
+        theme_custom_dark(base_size = 12, legend_position = "none", base_family = "sans") +
+        ggplot2::theme(
+          axis.text.x = ggplot2::element_blank(),
+          axis.ticks.x = ggplot2::element_blank(),
+          axis.title.x = ggplot2::element_blank(),
+          panel.grid.major = ggplot2::element_blank(),
+          panel.grid.minor = ggplot2::element_blank()
+        )
+      plotly::ggplotly(p, tooltip = "y")
     })
   }
 )}
