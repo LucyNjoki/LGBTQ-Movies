@@ -35,7 +35,7 @@ app_ui <- function(request) {
                       choices = c("All", "LGBT", "Gay", "Lesbian", "Transgender", "Bisexual",
                                   "Intersex", "Queer", "Genderqueer", "Non-binary", "Gender", "Asexual")),
           sliderInput("yearRange", "Release Year:",
-                      min = 1950, max = 2025, value = c(2000, 2025), sep = ""),
+                      min = min(lubridate::year(LGBTQMovies::movies_df$release_date), na.rm = TRUE), max = max(lubridate::year(LGBTQMovies::movies_df$release_date), na.rm = TRUE), value = c(2002, 2022), sep = ""),
           checkboxInput("showAdult", "Include Adult Movies", value = FALSE),
           checkboxInput("topRated", "Show Only Top Rated (8+)", value = FALSE)
         ),
