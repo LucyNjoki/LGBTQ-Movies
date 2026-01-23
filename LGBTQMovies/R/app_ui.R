@@ -18,7 +18,7 @@ app_ui <- function(request) {
 
       titlePanel(
         div(
-          img(src = "lgbtq_movies_hex_final.png", height = "100px", style = "margin-right:15px;"),
+          img(src = "www/lgbtq_movies_hex_final.png", height = "100px", style = "margin-right:15px;"),
           "LGBTQ+ Movies Explorer",
           style = "display: flex; align-items: center;"
         )

@@ -18,7 +18,7 @@ mod_Overview_ui <- function(id) {
     fluidRow(
       shinydashboard::box(
         width = 12,
-        title = "Key Movie Stats",
+       # title = "Key Movie Stats",
         status = "primary",
         solidHeader = TRUE,
         fluidRow(
@@ -78,10 +78,10 @@ mod_Overview_server <- function(id, data, text_data){
       wordcloud2::wordcloud2(
         data = text_data(),
         size = 1,
-        color = "random-dark",
+        color = "random-light",
         shape = "circle",
         rotateRatio = 0.2,
-        backgroundColor = "white"
+        backgroundColor = "black"
       )
     })
 
