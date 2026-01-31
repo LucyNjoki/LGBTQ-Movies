@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
-/* style table */
-/* smooth lines */
-table.dataTable.stripe tbody tr:hover {
-  background-color: purple;
-  color: white;
-}
-/* font of table */
-table.dataTable {
-  font-family: 'Helvetica', sans-serif;
-  font-size: 14px;
-  color: #333333;
+
+table.dataTable tbody tr:hover td {
+  background-color: #f4b51b !important; /* hover */
 }

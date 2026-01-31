@@ -1,7 +1,7 @@
 
 # Colors:
 
-color <- as.list(grDevices::rainbow(7))
+color <- rep("#f4b51b", 7)
 
 usethis::use_data(color, overwrite = TRUE)
 

@@ -11,7 +11,7 @@ mod_Language_Insights_ui <- function(id) {
   ns <- NS(id)
   tagList(
 
-    plotOutput(ns("langPlot"))
+    plotly::plotlyOutput(ns("langPlot"))
 
   )
 }
@@ -24,8 +24,8 @@ mod_Language_Insights_server <- function(id, data){
     ns <- session$ns
 
 
-    output$langPlot <- renderPlot({
-      data() |>
+    output$langPlot <- plotly::renderPlotly({
+      p <- data() |>
         dplyr::count(original_language) |>
         dplyr::top_n(10, n) |>
         dplyr::mutate(original_language = stringr::str_to_upper(original_language)) |>
@@ -36,27 +36,26 @@ mod_Language_Insights_server <- function(id, data){
           )
         ) +
         ggplot2::geom_col(fill = color[[3]]) +
-        ggplot2::geom_text(
-          ggplot2::aes(label = n),
-          hjust = -0.1, color = "white"
-        ) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.01, 0.1))) +
         ggplot2::coord_flip() +
         ggplot2::labs(
-          title = "Top Languages",
-          x = "Language",
+          title = "Top languages",
+          x = NULL,
           y = "Movies"
         ) +
         theme_custom_dark(
-          base_size = 12,
+          base_size = 13,
           legend_position = "none",
-          base_family = "sans"
+          grid_major = FALSE
         ) +
         ggplot2::theme(
+          axis.text.y = ggplot2::element_text(face = "bold"),
           axis.text.x = ggplot2::element_blank(),
           axis.ticks.x = ggplot2::element_blank(),
           axis.title.x = ggplot2::element_blank()
         )
+
+      plotly::ggplotly(p, tooltip = "y")
     })
   })
 }

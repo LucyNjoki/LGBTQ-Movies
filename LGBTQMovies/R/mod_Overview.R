@@ -10,31 +10,12 @@
 mod_Overview_ui <- function(id) {
   ns <- NS(id)
   tagList(
-
-    # shinydashboard::valueBoxOutput(ns("movieCount")),
-    # shinydashboard::valueBoxOutput(ns("avgRating")),
-    # shinydashboard::valueBoxOutput(ns("popularity"))
-    # Key Movie Stats
-    fluidRow(
-      shinydashboard::box(
-        width = 12,
-       # title = "Key Movie Stats",
-        status = "primary",
-        solidHeader = TRUE,
-        fluidRow(
-          column(width = 4, style = "padding-right:10px;", shinydashboard::valueBoxOutput(ns("movieCount"))),
-          column(width = 4, style = "padding-right:10px;", shinydashboard::valueBoxOutput(ns("avgRating"))),
-          column(width = 4, shinydashboard::valueBoxOutput(ns("popularity")))
-        )
-      )
-    ),
-
     # Interactive Word Cloud
     # this is causing the error
     fluidRow(
       shinydashboard::box(
         width = 12,
-        title = "Common Themes in Movie Descriptions",
+        title = "Common themes",
         status = "info",
         solidHeader = TRUE,
         div(
@@ -48,7 +29,6 @@ mod_Overview_ui <- function(id) {
       )
     )
   )
-
 }
 
 #' Overview Server Functions
@@ -58,20 +38,8 @@ mod_Overview_server <- function(id, data, text_data){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
-
-    output$movieCount <- shinydashboard::renderValueBox({
-      shinydashboard::valueBox(nrow(data()), "Movies", icon = icon("film"))
-    })
-
-    output$avgRating <- shinydashboard::renderValueBox({
-      shinydashboard::valueBox(round(mean(data()$vote_average, na.rm = TRUE), 2),
-                               "Avg Rating", icon = icon("star"))
-    })
-
-    output$popularity <- shinydashboard::renderValueBox({
-      shinydashboard::valueBox(round(mean(data()$popularity, na.rm = TRUE), 2),
-                               "Avg Popularity", icon = icon("fire"))
-    })
+    # QUERYCHAT - in progress
+    # DT::DTOutput("table")
 
     # Interactive wordcloud2
     output$wordcloud <- wordcloud2::renderWordcloud2({
@@ -81,7 +49,8 @@ mod_Overview_server <- function(id, data, text_data){
         color = "random-light",
         shape = "circle",
         rotateRatio = 0.2,
-        backgroundColor = "black"
+        backgroundColor = "black",
+        shuffle = FALSE
       )
     })
 

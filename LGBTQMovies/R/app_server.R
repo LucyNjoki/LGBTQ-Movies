@@ -43,15 +43,51 @@ app_server <- function(input, output, session) {
       dplyr::top_n(80, n)
   })
 
+
+  output$movieCount <- renderUI({
+    bslib::value_box(
+      title = "",
+      value = dplyr::n_distinct(filteredData()$title),
+      showcase = bsicons::bs_icon("film", size = "1.5rem"),
+      theme = "bg-secondary",
+      height = "100px"
+    )
+  })
+
+
+  output$avgRating <- renderUI({
+    bslib::value_box(
+      title = "",
+      value = round(mean(dplyr::n_distinct(filteredData()$vote_average), na.rm = TRUE), 2),
+      showcase = bsicons::bs_icon("fire", size = "2rem"),
+      theme = "bg-secondary",
+      height = "100px"
+    )
+  })
+
+  output$popularity <- renderUI({
+    bslib::value_box(
+      title = "",
+      value = round(mean(dplyr::n_distinct(filteredData()$popularity), na.rm = TRUE), 2),
+      showcase = bsicons::bs_icon("fire", size = "2rem"),
+      theme = "bg-secondary",
+      height = "100px"
+    )
+    })
+
+  context <- btw::btw(movies_df)
+
   chat <- ellmer::chat_groq(
     model = "llama-3.3-70b-versatile",
     api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
-    system_prompt = "You are an expert in LGBT+ movies. Your task is to provide insightful and engaging responses about LGBT+ cinema, including recommendations, historical context, and cultural significance. You should be able to discuss various genres, notable films, and trends within the LGBT+ film industry. Please respond in a friendly and informative manner.",
+    system_prompt = paste("You are an expert in LGBT+ movies. Your task is to provide insightful and engaging responses about LGBT+ cinema, including recommendations, historical context, and cultural significance. You should be able to discuss various genres, notable films, and trends within the LGBT+ film industry. Please respond in a friendly and informative manner. Base ALL your answers on this database:", context, "If the information is not in the database, tell the user."),
     seed = 123,
     api_args = list(temperature = 0.8)
   )
 
-  # Implementação do chat usando shinychat
+  shinychat::chat_ui("chat", message = "What would you like to know about queer cinema?", icon_assistant = bsicons::bs_icon("rainbow"))
+
+  # shinychat
   observeEvent(input$chat_user_input, {
     ns <- session$ns
 
@@ -63,6 +99,13 @@ app_server <- function(input, output, session) {
       shinychat::chat_append(ns("chat"), chat_result)
     }
   })
+
+  # QUERYCHAT - in progress
+  # qc_vals <- qc$server()
+  #
+  # output$table <- DT::renderDT({
+  #   datatable(qc_vals$df())
+  # })
 
   mod_Overview_server("Overview", data = filteredData, text_data = textData)
   mod_Trends_server("Trends", data = filteredData)

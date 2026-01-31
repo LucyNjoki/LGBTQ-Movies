@@ -19,6 +19,7 @@ Imports:
     here,
     lubridate,
     plotly,
+    querychat,
     rio,
     shiny,
     shinydashboard,

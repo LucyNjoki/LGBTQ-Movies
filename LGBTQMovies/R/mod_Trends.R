@@ -13,13 +13,13 @@ mod_Trends_ui <- function(id) {
     bslib::card(
       style = "background-color:white;",
       full_screen = TRUE,
-      bslib::card_header("LGBT+ Movie Releases Over Time", style = "background-color:white;"),
+      bslib::card_header("Movie releases over time", style = "background-color:white;"),
       plotOutput(ns("releaseTrend"))
      ),
     bslib::card(
       style = "background-color:white;",
       full_screen = TRUE,
-      bslib::card_header("Average Rating by Year", style = "background-color:white;"),
+      bslib::card_header("Movie rating over time", style = "background-color:white;"),
       plotOutput(ns("ratingTrend"))
     )
 
@@ -38,9 +38,10 @@ mod_Trends_server <- function(id, data){
         dplyr::mutate(year = lubridate::year(as.Date(release_date))) |>
         dplyr::count(year) |>
         ggplot2::ggplot(ggplot2::aes(x = year, y = n)) +
-        ggplot2::geom_line(color = color[[1]]) + ggplot2::geom_point(color = color[[1]]) +
-        ggplot2::labs(title = NULL, x = "Year", y = "Number of Movies") +
-        theme_custom_dark(base_size = 12, legend_position = "none")
+        ggplot2::geom_line(color = color[[1]], linewidth = 3, lineend = "butt", linejoin = "round", alpha = .8) +
+        ggplot2::geom_point(color = color[[1]]) +
+        ggplot2::labs(title = NULL, x = "Year", y = "Number of movies") +
+        theme_custom_dark(base_size = 22, legend_position = "none")
     })
 
     output$ratingTrend <- renderPlot({
@@ -49,9 +50,10 @@ mod_Trends_server <- function(id, data){
         dplyr::group_by(year) |>
         dplyr::summarise(avg_rating = mean(vote_average, na.rm = TRUE)) |>
         ggplot2::ggplot(ggplot2::aes(x = year, y = avg_rating)) +
-        ggplot2::geom_line(color = color[[2]]) + ggplot2::geom_point(color = color[[2]]) +
-        ggplot2::labs(title = NULL, x = "Year", y = "Avg Rating") +
-        theme_custom_dark(base_size = 12, legend_position = "none", base_family = "sans")
+        ggplot2::geom_line(color = color[[1]], linewidth = 3, lineend = "butt", linejoin = "round", alpha = .8) +
+        ggplot2::geom_point(color = color[[1]]) +
+        ggplot2::labs(title = NULL, x = "Year", y = "Average rating") +
+        theme_custom_dark(base_size = 22, legend_position = "none")
     })
 
   })

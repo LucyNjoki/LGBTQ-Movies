@@ -1,6 +1,12 @@
 # Functions for plots themes
 library(ggplot2)
 library(grid)   # for unit()
+library(sysfonts)
+library(showtext)
+
+# Add Google font
+font_add_google("Inter", "inter")
+showtext_auto()
 
 #' Create a customisable ggplot2 theme
 #'
@@ -22,7 +28,7 @@ library(grid)   # for unit()
 #' @param caption_face font face for caption
 #' @return a ggplot2 theme object
 theme_custom <- function(
-    base_size = 11, base_family = "sans",
+    base_size = 11, base_family = "inter",
     axis_title_size = base_size * 1.05,
     axis_text_size  = base_size * 0.9,
     legend_size     = base_size * 0.9,
@@ -57,7 +63,7 @@ theme_custom <- function(
 
       # Panel & grid
       panel.grid.major = if (grid_major) element_line(color = grid_color, size = 0.3) else element_blank(),
-      # panel.grid.minor = if (grid_minor) element_line(color = grid_color, size = 0.15) else element_blank(),
+      panel.grid.minor = if (grid_minor) element_line(color = grid_color, size = 0.15) else element_blank(),
       panel.border = if (panel_border) element_rect(fill = NA, colour = "grey80") else element_blank(),
 
       # Legend
@@ -93,3 +99,20 @@ theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#0
       plot.background  = element_rect(fill = plot_background, color = plot_background)
     )
 }
+
+# QUERYCHAT - in progress
+# chat_llama <- ellmer::chat_groq(
+#   model = "llama-3.3-70b-versatile",
+#   api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
+#   seed = 123,
+#   api_args = list(temperature = 0.8)
+# )
+#
+# qc <-
+#   querychat::QueryChat$new(
+#     mtcars,
+#     #tbl_name = movies_df,
+#     client = chat_llama,
+#     #greeting = "Let's explore the data together!"
+#     data_description = "Motor Trend car road tests dataset"
+#   )
