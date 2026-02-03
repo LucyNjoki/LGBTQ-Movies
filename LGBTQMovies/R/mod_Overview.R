@@ -12,6 +12,7 @@ mod_Overview_ui <- function(id) {
   tagList(
     # Interactive Word Cloud
     # this is causing the error
+
     fluidRow(
       shinydashboard::box(
         width = 12,
@@ -19,7 +20,7 @@ mod_Overview_ui <- function(id) {
         status = "info",
         solidHeader = TRUE,
         div(
-          style = "height: 450px;",
+          style = "height: 400px;",
           wordcloud2::wordcloud2Output(ns("wordcloud"), width = "100%", height = "100%")
         ),
         tags$p(
@@ -37,9 +38,6 @@ mod_Overview_ui <- function(id) {
 mod_Overview_server <- function(id, data, text_data){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
-
-    # QUERYCHAT - in progress
-    # DT::DTOutput("table")
 
     # Interactive wordcloud2
     output$wordcloud <- wordcloud2::renderWordcloud2({

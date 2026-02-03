@@ -47,10 +47,10 @@ app_server <- function(input, output, session) {
   output$movieCount <- renderUI({
     bslib::value_box(
       title = "",
-      value = dplyr::n_distinct(filteredData()$title),
+      value = div(dplyr::n_distinct(filteredData()$title), style = "font-size: 13px;"),
       showcase = bsicons::bs_icon("film", size = "1.5rem"),
       theme = "bg-secondary",
-      height = "100px"
+      height = "80px"
     )
   })
 
@@ -58,59 +58,29 @@ app_server <- function(input, output, session) {
   output$avgRating <- renderUI({
     bslib::value_box(
       title = "",
-      value = round(mean(dplyr::n_distinct(filteredData()$vote_average), na.rm = TRUE), 2),
+      value = div(round(mean(dplyr::n_distinct(filteredData()$vote_average), na.rm = TRUE), 2), style = "font-size: 13px;"),
       showcase = bsicons::bs_icon("fire", size = "2rem"),
       theme = "bg-secondary",
-      height = "100px"
+      height = "80px"
     )
   })
 
   output$popularity <- renderUI({
     bslib::value_box(
       title = "",
-      value = round(mean(dplyr::n_distinct(filteredData()$popularity), na.rm = TRUE), 2),
-      showcase = bsicons::bs_icon("fire", size = "2rem"),
+      value = div(round(mean(dplyr::n_distinct(filteredData()$popularity), na.rm = TRUE), 2), style = "font-size: 13px;"),
+      showcase = bsicons::bs_icon("star", size = "2rem"),
       theme = "bg-secondary",
-      height = "100px"
+      height = "80px"
     )
-    })
-
-  context <- btw::btw(movies_df)
-
-  chat <- ellmer::chat_groq(
-    model = "llama-3.3-70b-versatile",
-    api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
-    system_prompt = paste("You are an expert in LGBT+ movies. Your task is to provide insightful and engaging responses about LGBT+ cinema, including recommendations, historical context, and cultural significance. You should be able to discuss various genres, notable films, and trends within the LGBT+ film industry. Please respond in a friendly and informative manner. Base ALL your answers on this database:", context, "If the information is not in the database, tell the user."),
-    seed = 123,
-    api_args = list(temperature = 0.8)
-  )
-
-  shinychat::chat_ui("chat", message = "What would you like to know about queer cinema?", icon_assistant = bsicons::bs_icon("rainbow"))
-
-  # shinychat
-  observeEvent(input$chat_user_input, {
-    ns <- session$ns
-
-    chat_result <- try(chat$stream_async(input$chat_user_input), silent = TRUE)
-
-    if (inherits(chat_result, "try-error")) {
-      shinychat::chat_append(ns("chat"), "⚠️ Error processing your request. Please try again later")
-    } else {
-      shinychat::chat_append(ns("chat"), chat_result)
-    }
   })
 
-  # QUERYCHAT - in progress
-  # qc_vals <- qc$server()
-  #
-  # output$table <- DT::renderDT({
-  #   datatable(qc_vals$df())
-  # })
 
   mod_Overview_server("Overview", data = filteredData, text_data = textData)
   mod_Trends_server("Trends", data = filteredData)
   mod_Genre_Breakdown_server("Genre_Breakdown", data = filteredData)
   mod_Top_Movies_server("Top_Movies", data = filteredData)
   mod_Language_Insights_server("Language_Insights", data = filteredData)
+  mod_chat_server("chat", data = filteredData)
 
 }

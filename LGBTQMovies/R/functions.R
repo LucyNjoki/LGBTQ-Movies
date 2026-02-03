@@ -62,8 +62,8 @@ theme_custom <- function(
       axis.text = element_text(size = axis_text_size),
 
       # Panel & grid
-      panel.grid.major = if (grid_major) element_line(color = grid_color, size = 0.3) else element_blank(),
-      panel.grid.minor = if (grid_minor) element_line(color = grid_color, size = 0.15) else element_blank(),
+      panel.grid.major = if (grid_major) element_line(color = grid_color, linewidth = 0.3) else element_blank(),
+      panel.grid.minor = if (grid_minor) element_line(color = grid_color, linewidth = 0.15) else element_blank(),
       panel.border = if (panel_border) element_rect(fill = NA, colour = "grey80") else element_blank(),
 
       # Legend
@@ -100,19 +100,21 @@ theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#0
     )
 }
 
-# QUERYCHAT - in progress
-# chat_llama <- ellmer::chat_groq(
-#   model = "llama-3.3-70b-versatile",
-#   api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
-#   seed = 123,
-#   api_args = list(temperature = 0.8)
-# )
-#
-# qc <-
-#   querychat::QueryChat$new(
-#     mtcars,
-#     #tbl_name = movies_df,
-#     client = chat_llama,
-#     #greeting = "Let's explore the data together!"
-#     data_description = "Motor Trend car road tests dataset"
-#   )
+chat_ellmer <- ellmer::chat_groq(
+  model = "llama-3.3-70b-versatile",
+  api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
+  system_prompt = "You are an expert in LGBT+ movies. You MUST answer ONLY using SQL queries over the table 'queer_movies'. Never use external knowledge. Provide insightful and engaging responses about LGBT+ cinema. based strictly on the database results.",
+  seed = 123,
+  api_args = list(temperature = 0.8)
+)
+
+movies_df <- LGBTQMovies::movies_df
+
+qc <-
+  querychat::QueryChat$new(
+    movies_df,
+    "queer_movies",
+    greeting = "What would you like to know about queer cinema?",
+    client = chat_ellmer
+    )
+
