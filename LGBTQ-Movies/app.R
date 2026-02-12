@@ -13,6 +13,46 @@ library(wordcloud2)
 library(RColorBrewer)
 library(bslib)
 library(plotly)
+library(ggfx)
+
+theme_app <- function(base_size = 14, base_family = "sans") {
+  
+  theme_bw(base_size = base_size, base_family = base_family) +
+    
+    theme(
+      # Titles
+      plot.title = element_text(
+        size = base_size + 4,
+        face = "bold",
+        hjust = 0
+      ),
+      
+      # Axis titles
+      axis.title = element_text(
+        size = base_size,
+        face = "bold"
+      ),
+      
+      # Axis text
+      axis.text = element_text(
+        size = base_size - 2
+      ),
+      
+      # Grid
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.major.x = element_blank(),
+      
+      # Background
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA),
+      
+      # Legend
+      legend.title = element_text(face = "bold"),
+      legend.position = "right"
+    )
+}
+
 
 # UI
 ui <- fluidPage(
@@ -40,7 +80,7 @@ ui <- fluidPage(
                   )
       ),
       sliderInput("yearRange", "Release Year:",
-                  min = 1950, max = 2025, value = c(2000, 2025), sep = ""
+                  min = 1950, max = 2025, value = c(1950, 2025), sep = ""
       ),
       checkboxInput("showAdult", "Include Adult Movies", value = FALSE),
       checkboxInput("topRated", "Show Only Top Rated (8+)", value = FALSE)
@@ -341,61 +381,180 @@ server <- function(input, output, session) {
   #         side = 1, line = 4, cex = 0.8, col = "grey40")
   # })
   
-  
   output$releaseTrend <- renderPlot({
-    filteredData() %>%
+    
+    yearly_counts <- filteredData() %>%
       mutate(year = lubridate::year(as.Date(release_date))) %>%
-      count(year) %>%
-      ggplot(aes(x = year, y = n)) +
+      count(year)
+    
+    max_row <- yearly_counts %>%
+      filter(n == max(n, na.rm = TRUE))
+    
+    ggplot(yearly_counts, aes(x = year, y = n)) +
       geom_line(colour = "black", size = 0.8) +
       geom_point(colour = "black", size = 1.2) +
+      
+      # Highlight max point
+      geom_point(data = max_row, colour = "red", size = 1.5) +
+      
+      # Add text label
+      geom_text(
+        data = max_row,
+        aes(label = paste0("Max: ", n, " (", year, ")")),
+        vjust = -0.5,
+        colour = "red",
+        fontface = "bold"
+      ) +
+      
       labs(
         title = "LGBT+ Movie Releases Over Time",
         x = "Year",
         y = "Number of Movies"
       ) +
-      theme_minimal()
+      theme_app()
   })
+  
+  # output$releaseTrend <- renderPlot({
+  #   filteredData() %>%
+  #     mutate(year = lubridate::year(as.Date(release_date))) %>%
+  #     count(year) %>%
+  #     ggplot(aes(x = year, y = n)) +
+  #     geom_line(colour = "black", size = 0.8) +
+  #     geom_point(colour = "black", size = 1.2) +
+  #     labs(
+  #       title = "LGBT+ Movie Releases Over Time",
+  #       x = "Year",
+  #       y = "Number of Movies"
+  #     ) +
+  #     theme_minimal()
+  # })
   
   output$ratingTrend <- renderPlot({
-    filteredData() %>%
+    
+    yearly_ratings <- filteredData() %>%
       mutate(year = lubridate::year(as.Date(release_date))) %>%
       group_by(year) %>%
-      summarise(avg_rating = mean(vote_average, na.rm = TRUE)) %>%
-      ggplot(aes(x = year, y = avg_rating)) +
+      summarise(avg_rating = mean(vote_average, na.rm = TRUE))
+    
+    max_row <- yearly_ratings %>%
+      filter(avg_rating == max(avg_rating, na.rm = TRUE))
+    
+    ggplot(yearly_ratings, aes(x = year, y = avg_rating)) +
       geom_line(color = "#68228B", size = 0.8) +
       geom_point(color = "#68228B", size = 1.2) +
+      
+      # Highlight max point
+      geom_point(data = max_row, colour = "red", size = 1.5) +
+      
+      # Add annotation
+      geom_text(
+        data = max_row,
+        aes(label = paste0("Max: ", round(avg_rating, 2), " (", year, ")")),
+        vjust = -0.5,
+        colour = "red",
+        fontface = "bold"
+      ) +
+      
       labs(title = "Average Rating by Year", x = "Year", y = "Avg Rating") +
-      ggthemes::theme_hc()
+      theme_app()
   })
   
+  
+  
+  # output$ratingTrend <- renderPlot({
+  #   filteredData() %>%
+  #     mutate(year = lubridate::year(as.Date(release_date))) %>%
+  #     group_by(year) %>%
+  #     summarise(avg_rating = mean(vote_average, na.rm = TRUE)) %>%
+  #     ggplot(aes(x = year, y = avg_rating)) +
+  #     geom_line(color = "#68228B", size = 0.8) +
+  #     geom_point(color = "#68228B", size = 1.2) +
+  #     labs(title = "Average Rating by Year", x = "Year", y = "Avg Rating") +
+  #     ggthemes::theme_hc()
+  # })
+  
+
+  
+  # output$genrePlot <- renderPlotly({
+  #   genre_data <- filteredData() %>%
+  #     count(genre_ids_recoded) %>%
+  #     mutate(genre = fct_reorder(genre_ids_recoded, n))
+  #   
+  #   # p <- ggplot(genre_data, aes(x = genre, y = n)) +
+  #   #   geom_col(fill = "darkgreen") +
+  #   #   coord_flip() +
+  #   #   labs(title = "Most Common Genres", x = "Genre", y = "Count") +
+  #   #   ggdark::dark_theme_dark()
+  #   # 
+  #   # ggplotly(p)
+  #   
+  #   p <- ggplot(genre_data, aes(genre, n)) +
+  #     geom_col(fill = "#2ecc71") +
+  #     coord_flip() +
+  #     labs(title = "Most Common Genres", x = "Genre", y = "Count") +
+  #     ggdark::dark_theme_gray() +
+  #     theme(
+  #       panel.grid.major = element_line(color = "gray25"),
+  #       panel.grid.minor = element_blank()
+  #     )
+  # 
+  #   ggplotly(p)
+  #   
+  #  
+  # })
+  
   output$genrePlot <- renderPlotly({
+    
     genre_data <- filteredData() %>%
       count(genre_ids_recoded) %>%
-      mutate(genre = fct_reorder(genre_ids_recoded, n))
+      mutate(
+        genre = fct_reorder(genre_ids_recoded, n)
+      )
     
-    # p <- ggplot(genre_data, aes(x = genre, y = n)) +
-    #   geom_col(fill = "darkgreen") +
-    #   coord_flip() +
-    #   labs(title = "Most Common Genres", x = "Genre", y = "Count") +
-    #   ggdark::dark_theme_dark()
-    # 
-    # ggplotly(p)
-    
-    p <- ggplot(genre_data, aes(genre, n)) +
+    p <- ggplot(
+      genre_data,
+      aes(
+        x = genre,
+        y = n,
+        text = paste0(
+          "Genre: ", genre,
+          "<br>Count: ", n
+        )
+      )
+    ) +
       geom_col(fill = "#2ecc71") +
       coord_flip() +
-      labs(title = "Most Common Genres", x = "Genre", y = "Count") +
-      ggdark::dark_theme_gray() +
+      labs(
+        title = "Most Common Genres",
+        x = NULL,      # remove axis label
+        y = NULL       # remove y label (since we hide axis)
+      ) +
+      theme_app() +
       theme(
-        panel.grid.major = element_line(color = "gray25"),
+        axis.title.x = element_blank(),
+        axis.text.x  = element_blank(),
+        axis.ticks.x = element_blank(),
         panel.grid.minor = element_blank()
       )
-
-    ggplotly(p)
     
-   
+    ggplotly(p, tooltip = "text") %>%
+      layout(
+        font = list(
+          family = "sans",
+          size = 14,
+          color = "black"
+        ),
+        xaxis = list(
+          showgrid = FALSE,
+          zeroline = FALSE
+        ),
+        yaxis = list(
+          title = ""
+        )
+      )
+    
   })
+  
   
   
   
@@ -407,22 +566,65 @@ server <- function(input, output, session) {
     ggplot(lang_data, aes(
       x = fct_reorder(original_language_recoded, n),
       y = n,
-      fill = original_language_recoded
+      fill = original_language_recoded,
+      text = paste0(
+        "Language: ", original_language_recoded,
+        "<br>Movies Count: ", n
+      )
     )) +
       geom_col() +
+      # Shadow layer
+      with_shadow(
+        geom_col(),
+        sigma = 5,        # blur strength
+        x_offset = 4,     # horizontal shift
+        y_offset = -2,    # vertical shift
+        colour = "grey40"
+      ) +
       coord_flip() +
       labs(
         title = "Top 10 Languages",
         x = "Language",
-        y = "Movies"
+        y = "Count of Movies"
       ) +
       scale_fill_manual(
         values = rep(palette_lgbtq("progress"),
                      length.out = length(unique(lang_data$original_language_recoded)))
       ) +
-      theme_lgbtq("progress", legend.position = "none")
-  })
+      theme_app() +
+      theme(legend.position = "none")
   
+  })
+  # theme_lgbtq("progress", legend.position = "none") +
+  # theme(
+  #   theme(
+  #     # Titles
+  #     plot.title = element_text(
+  #       size = 18,
+  #       face = "bold",
+  #       hjust = 0
+  #     ),
+  #     
+  #     # Axis titles
+  #     axis.title = element_text(
+  #       size = 14,
+  #       face = "bold"
+  #     ),
+  #     
+  #     # Axis text
+  #     axis.text = element_text(
+  #       size = 12
+  #     ),
+  #     
+  #     # Grid
+  #     panel.grid.minor = element_blank(),
+  #     panel.grid.major = element_line(color = "grey85"),
+  #     
+  #     # Background
+  #     plot.background = element_rect(fill = "white", color = NA),
+  #     panel.background = element_rect(fill = "white", color = NA)
+  #   )
+  # )
   
   output$topMovies <- renderDataTable({
     filteredData() %>%
