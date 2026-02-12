@@ -93,3 +93,41 @@ theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#0
       plot.background  = element_rect(fill = plot_background, color = plot_background)
     )
 }
+
+# theme_app <- function(base_size = 14, base_family = "sans") {
+#
+#   theme_bw(base_size = base_size, base_family = base_family) +
+#
+#     theme(
+#       # Titles
+#       plot.title = element_text(
+#         size = base_size + 4,
+#         face = "bold",
+#         hjust = 0
+#       ),
+#
+#       # Axis titles
+#       axis.title = element_text(
+#         size = base_size,
+#         face = "bold"
+#       ),
+#
+#       # Axis text
+#       axis.text = element_text(
+#         size = base_size - 2
+#       ),
+#
+#       # Grid
+#       panel.grid.minor = element_blank(),
+#       panel.grid.major = element_blank(),
+#       panel.grid.major.x = element_blank(),
+#
+#       # Background
+#       plot.background = element_rect(fill = "white", color = NA),
+#       panel.background = element_rect(fill = "white", color = NA),
+#
+#       # Legend
+#       legend.title = element_text(face = "bold"),
+#       legend.position = "right"
+#     )
+# }
