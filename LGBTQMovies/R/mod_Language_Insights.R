@@ -58,6 +58,44 @@ mod_Language_Insights_server <- function(id, data){
           axis.title.x = ggplot2::element_blank()
         )
     })
+
+    # output$langPlot <- renderPlot({
+    #   lang_data <- filteredData() %>%
+    #     dplyr::count(original_language_recoded) %>%
+    #     dplyr::top_n(10, n)
+    #
+    #   ggplot2::ggplot(lang_data, aes(
+    #     x = fct_reorder(original_language_recoded, n),
+    #     y = n,
+    #     fill = original_language_recoded,
+    #     text = paste0(
+    #       "Language: ", original_language_recoded,
+    #       "<br>Movies Count: ", n
+    #     )
+    #   )) +
+    #     ggplot2::geom_col() +
+    #     # Shadow layer
+    #     ggfx::with_shadow(
+    #       geom_col(),
+    #       sigma = 5,        # blur strength
+    #       x_offset = 4,     # horizontal shift
+    #       y_offset = -2,    # vertical shift
+    #       colour = "grey40"
+    #     ) +
+    #     ggplot2::coord_flip() +
+    #     ggplot2::labs(
+    #       title = "Top 10 Languages",
+    #       x = "Language",
+    #       y = "Count of Movies"
+    #     ) +
+    #     ggplot2::scale_fill_manual(
+    #       values = rep(palette_lgbtq("progress"),
+    #                    length.out = length(unique(lang_data$original_language_recoded)))
+    #     ) +
+    #     theme_app() +
+    #     ggplot2::theme(legend.position = "none")
+    #
+    # })
   })
 }
 
