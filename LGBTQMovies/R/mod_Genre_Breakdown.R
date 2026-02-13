@@ -33,13 +33,11 @@ mod_Genre_Breakdown_server <- function(id, data){
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.01, 0.1))) +
         ggplot2::coord_flip() +
         ggplot2::labs(title = "Most Common Genres", x = NULL, y = NULL) +
-        theme_custom_dark(base_size = 12, legend_position = "none", base_family = "sans") +
+        theme_custom_dark(base_size = 13, legend_position = "none", base_family = "inter", grid_major = FALSE) +
         ggplot2::theme(
           axis.text.x = ggplot2::element_blank(),
           axis.ticks.x = ggplot2::element_blank(),
-          axis.title.x = ggplot2::element_blank(),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank()
+          axis.title.x = ggplot2::element_blank()
         )
       plotly::ggplotly(p, tooltip = "y")
     })

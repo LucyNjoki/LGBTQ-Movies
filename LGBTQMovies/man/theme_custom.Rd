@@ -6,7 +6,7 @@
 \usage{
 theme_custom(
   base_size = 11,
-  base_family = "Red Hat Text",
+  base_family = "inter",
   axis_title_size = base_size * 1.05,
   axis_text_size = base_size * 0.9,
   legend_size = base_size * 0.9,

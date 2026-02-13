@@ -1,0 +1,10 @@
+name: LGBTQMovies
+title: LGBTQMovies
+username: tamimart
+account: tamimart
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16668614
+bundleId:
+url: https://tamimart.shinyapps.io/LGBTQMovies/
+version: 1

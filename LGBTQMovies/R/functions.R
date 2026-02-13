@@ -1,6 +1,12 @@
 # Functions for plots themes
 library(ggplot2)
 library(grid)   # for unit()
+library(sysfonts)
+library(showtext)
+
+# Add Google font
+font_add_google("Inter", "inter")
+showtext_auto()
 
 #' Create a customisable ggplot2 theme
 #'
@@ -22,7 +28,7 @@ library(grid)   # for unit()
 #' @param caption_face font face for caption
 #' @return a ggplot2 theme object
 theme_custom <- function(
-    base_size = 11, base_family = "sans",
+    base_size = 11, base_family = "inter",
     axis_title_size = base_size * 1.05,
     axis_text_size  = base_size * 0.9,
     legend_size     = base_size * 0.9,
@@ -56,8 +62,8 @@ theme_custom <- function(
       axis.text = element_text(size = axis_text_size),
 
       # Panel & grid
-      panel.grid.major = if (grid_major) element_line(color = grid_color, size = 0.3) else element_blank(),
-      # panel.grid.minor = if (grid_minor) element_line(color = grid_color, size = 0.15) else element_blank(),
+      panel.grid.major = if (grid_major) element_line(color = grid_color, linewidth = 0.3) else element_blank(),
+      panel.grid.minor = if (grid_minor) element_line(color = grid_color, linewidth = 0.15) else element_blank(),
       panel.border = if (panel_border) element_rect(fill = NA, colour = "grey80") else element_blank(),
 
       # Legend
@@ -94,40 +100,47 @@ theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#0
     )
 }
 
-# theme_app <- function(base_size = 14, base_family = "sans") {
+is_shinyapps <- function() {
+  nzchar(Sys.getenv("SHINY_PORT"))
+}
+
+if (is_shinyapps()) {
+  chat_ellmer <- ellmer::chat_groq(
+    model = "llama-3.1-8b-instant",
+    api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
+    seed = 123,
+    api_args = list(temperature = 0.8)
+  )
+} else {
+  chat_ellmer <- ellmer::chat_ollama(
+    model = "llama3.2",
+    seed = 123,
+    api_args = list(temperature = 0.8)
+  )
+}
+
+# qc2 <-
+#   querychat::QueryChat$new(
+#     movies_red,
+#     client = chat_ellmer)
 #
-#   theme_bw(base_size = base_size, base_family = base_family) +
-#
-#     theme(
-#       # Titles
-#       plot.title = element_text(
-#         size = base_size + 4,
-#         face = "bold",
-#         hjust = 0
-#       ),
-#
-#       # Axis titles
-#       axis.title = element_text(
-#         size = base_size,
-#         face = "bold"
-#       ),
-#
-#       # Axis text
-#       axis.text = element_text(
-#         size = base_size - 2
-#       ),
-#
-#       # Grid
-#       panel.grid.minor = element_blank(),
-#       panel.grid.major = element_blank(),
-#       panel.grid.major.x = element_blank(),
-#
-#       # Background
-#       plot.background = element_rect(fill = "white", color = NA),
-#       panel.background = element_rect(fill = "white", color = NA),
-#
-#       # Legend
-#       legend.title = element_text(face = "bold"),
-#       legend.position = "right"
-#     )
-# }
+# greeting <- qc2$generate_greeting("none")
+# writeLines(greeting, "movies_greeting.md")
+
+instructions <- "
+- Use British spelling conventions (e.g., 'colour', 'favourite', 'analyse')
+- When you don't understand the user's command or cannot generate a valid query, clearly state this and suggest an alternative phrasing they could use. For example: 'I didnt understand that request. Try asking: Show me movies from 2020 or Filter by genre Drama'
+- Politely refuse to answer questions unrelated to the LGBTQ+ movies database. For example: I can only help with queries about LGBTQ+ films in this database. Please ask about movies, genres, release dates, or ratings.
+- Only generate queries that will return valid dataframes based on the available columns.
+- When searching for languages use the extensive version, e.g., English, Spanish"
+
+qc <-
+  querychat::QueryChat$new(
+    LGBTQMovies::movies_red,
+    "queer_movies",
+    client = chat_ellmer,
+    data_description = "./data_description.md",
+    greeting = "./movies_greeting.md",
+    extra_instructions = "instructions",
+    cleanup = TRUE
+    )

@@ -1,7 +1,7 @@
 
 # Colors:
 
-color <- as.list(grDevices::rainbow(7))
+color <- rep("#f4b51b", 7)
 
 usethis::use_data(color, overwrite = TRUE)
 
@@ -131,4 +131,16 @@ usethis::use_data(movies_df, overwrite = TRUE)
 utils::globalVariables("movies_df") # to suppress an error that appears when checking the package
 
 
+movies_red <- movies_df |>
+  dplyr::select(title:original_title, original_language = original_language_recoded, genre = genre_ids_recoded, overview:adult) |>
+  dplyr::group_by(across(-genre))  |>
+  dplyr::summarise(
+    genre = paste(unique(genre), collapse = ", "),
+    .groups = "drop"
+  )
 
+# save processed data into package
+usethis::use_data(movies_red, overwrite = TRUE)
+
+# run it on time for each data/global values
+utils::globalVariables("movies_red")

@@ -7,8 +7,7 @@
 app_server <- function(input, output, session) {
 
   filteredData <- reactive({
-    movies_data = movies_df
-    df <- movies_data  # your loaded dataset
+    df <- movies_df
 
     # Filter by keyword (assuming keyword is a column or derived from a list)
     if (input$keyword != "All") {
@@ -37,37 +36,63 @@ app_server <- function(input, output, session) {
     filteredData()  |>
       dplyr::select(overview) |>
       tidytext::unnest_tokens(word, overview) |>
-      dplyr::anti_join(tidytext::stop_words) |>
+      dplyr::anti_join(tidytext::stop_words, by = dplyr::join_by(word)) |>
       dplyr::count(word, sort = TRUE) |>
       dplyr::filter(n >= 10) |>
       dplyr::top_n(80, n)
   })
 
-  chat <- ellmer::chat_groq(
-    model = "llama-3.3-70b-versatile",
-    api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
-    system_prompt = "You are an expert in LGBT+ movies. Your task is to provide insightful and engaging responses about LGBT+ cinema, including recommendations, historical context, and cultural significance. You should be able to discuss various genres, notable films, and trends within the LGBT+ film industry. Please respond in a friendly and informative manner.",
-    seed = 123,
-    api_args = list(temperature = 0.8)
-  )
 
-  # Implementação do chat usando shinychat
-  observeEvent(input$chat_user_input, {
-    ns <- session$ns
-
-    chat_result <- try(chat$stream_async(input$chat_user_input), silent = TRUE)
-
-    if (inherits(chat_result, "try-error")) {
-      shinychat::chat_append(ns("chat"), "⚠️ Error processing your request. Please try again later")
-    } else {
-      shinychat::chat_append(ns("chat"), chat_result)
-    }
+  allData <- reactive({
+    movies_df
   })
+
+  output$movieCount <- renderUI({
+    df <- filteredData()
+    if (is.null(df) || nrow(df) == 0) df <- allData()
+
+    bslib::value_box(
+      title = "",
+      value = div(dplyr::n_distinct(df$title), style = "font-size: 13px;"),
+      showcase = bsicons::bs_icon("film", size = "1.5rem"),
+      theme = "bg-secondary",
+      height = "80px"
+    )
+  })
+
+
+  output$avgRating <- renderUI({
+    df <- filteredData()
+    if (is.null(df) || nrow(df) == 0) df <- allData()
+
+    bslib::value_box(
+      title = "",
+      value = div(round(mean(dplyr::n_distinct(df$vote_average), na.rm = TRUE), 2), style = "font-size: 13px;"),
+      showcase = bsicons::bs_icon("fire", size = "2rem"),
+      theme = "bg-secondary",
+      height = "80px"
+    )
+  })
+
+  output$popularity <- renderUI({
+    df <- filteredData()
+    if (is.null(df) || nrow(df) == 0) df <- allData()
+
+    bslib::value_box(
+      title = "",
+      value = div(round(mean(dplyr::n_distinct(df$popularity), na.rm = TRUE), 2), style = "font-size: 13px;"),
+      showcase = bsicons::bs_icon("star", size = "2rem"),
+      theme = "bg-secondary",
+      height = "80px"
+    )
+  })
+
 
   mod_Overview_server("Overview", data = filteredData, text_data = textData)
   mod_Trends_server("Trends", data = filteredData)
   mod_Genre_Breakdown_server("Genre_Breakdown", data = filteredData)
   mod_Top_Movies_server("Top_Movies", data = filteredData)
   mod_Language_Insights_server("Language_Insights", data = filteredData)
+  mod_chat_server("chat")
 
 }

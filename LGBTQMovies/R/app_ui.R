@@ -14,7 +14,7 @@ app_ui <- function(request) {
     # Your application UI logic
     fluidPage(
 
-      theme = bslib::bs_theme(bootswatch = "cyborg"),
+      theme = bslib::bs_theme(bootswatch = "cyborg", primary = "#f4b51b"),
 
       titlePanel(
         div(
@@ -37,64 +37,41 @@ app_ui <- function(request) {
           sliderInput("yearRange", "Release Year:",
                       min = min(lubridate::year(LGBTQMovies::movies_df$release_date), na.rm = TRUE), max = max(lubridate::year(LGBTQMovies::movies_df$release_date), na.rm = TRUE), value = c(2002, 2022), sep = ""),
           checkboxInput("showAdult", "Include Adult Movies", value = FALSE),
-          checkboxInput("topRated", "Show Only Top Rated (8+)", value = FALSE)
-        ),
+          checkboxInput("topRated", "Show Only Top Rated (8+)", value = FALSE),
+          bslib::layout_column_wrap(
+            width = 1/3,
+            uiOutput("movieCount"),
+            uiOutput("avgRating"),
+            uiOutput("popularity")
+          )
+         ),
 
         mainPanel(
           tabsetPanel(
             tabPanel("Overview",
                      br(),
-                     tags$div(
                        mod_Overview_ui("Overview"),
-                       style = "margin-top: 10px;"  # it didnt worked
-                      )
-                     ),
-
+                     br()),
             tabPanel("Trends",
                      br(),
                      mod_Trends_ui("Trends"),
                      br()),
-
-            tabPanel("Genre Breakdown",
-                     br(),
-                     mod_Genre_Breakdown_ui("Genre_Breakdown"),
-                     br()),
-
             tabPanel("Top Movies",
                      br(),
                      mod_Top_Movies_ui("Top_Movies"),
                      br()),
-
-            tabPanel("Language Insights",
+            tabPanel("Genres",
+                     br(),
+                     mod_Genre_Breakdown_ui("Genre_Breakdown"),
+                     br()),
+            tabPanel("Languages",
                      br(),
                      mod_Language_Insights_ui("Language_Insights"),
+                     br()),
+            tabPanel("🌈",
+                     br(),
+                     mod_chat_ui("chat"),
                      br())
-          ),
-          br(),
-          tags$div(
-            style = "
-              display: flex;
-              align-items: center;
-              gap: 12px;
-              background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
-              padding: 12px;
-              border-radius: 12px;
-              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            ",
-            tags$div(
-              style = "
-                flex: 1;
-                background-color: white;
-                border-radius: 10px;
-                padding: 10px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-              ",
-              shinychat::chat_ui(
-                'chat',
-                placeholder = "Ask me anything about LGBT+ cinema! 🌈✨",
-                width = "100%"
-              )
-            )
           )
         )
       )
