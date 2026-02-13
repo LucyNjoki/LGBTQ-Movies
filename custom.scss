@@ -1,0 +1,111 @@
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-sans-serif: "Raleway", "Gill Sans", "Trebuchet MS", sans-serif;
+
+
+// colors
+$body-bg: #ffe5ec !default;
+$body-color: #000 !default;
+$link-color: #6a1b9a; /* purple accent */
+$selection-bg: #26351c !default;
+$code-color: #444;
+
+// headings
+$presentation-heading-font: "Palatino Linotype", "Book Antiqua", Palatino,
+  FreeSerif, serif !default;
+$presentation-heading-color: #1E2A38 !default;; /* navy contrast */
+$presentation-h2-font-size: 1.2em;
+$presentation-h3-font-size: 1.0em;
+
+/*-- scss:rules --*/
+
+.reveal a {
+  line-height: 1.4em;
+}
+
+.quarto-title-author-name {
+  font-size: 25px;  /* Customize the author font size */
+  color: #450920 !important;
+}
+
+.title {
+  font-size: 48px !important;
+  color: #450920 !important;
+}
+
+.subtitle {
+  font-size: 35px !important;
+  color: #450920 !important;
+}
+
+.date {
+  font-size: 20px !important;
+  color: #450920 !important;
+}
+
+/* Top-align slides and reduce padding so there's less empty space */
+.reveal .slides section {
+  display: block;            /* no more vertical centering */
+  padding: 1rem 2rem 1.2rem; /* smaller top/bottom padding so content fits */
+  box-sizing: border-box;
+  overflow: visible;
+  text-align: left;            /* left-align content (more typical for bullets) */
+}
+
+/* Wrap slide content so headings + bullets occupy natural vertical flow */
+.reveal .slides section > * {
+  margin-top: 0.22rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Limit text container width so text lines wrap nicely and fill area */
+.reveal .slides section .content,
+.reveal .slides section .container {
+  max-width: 820px;
+  margin: 0;
+}
+
+/* Make lists use a bit more compact spacing */
+.reveal ul,
+.reveal ol {
+  font-size: 0.9em;  /* slightly larger if needed */
+  line-height: 1.25em;
+  margin-bottom: 0.6em;
+}
+
+/* If you still want some vertical centering on the title slide only */
+.reveal .slides section.title-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Prevent visual clipping and reduce extra padding */
+.reveal,
+.reveal .slides {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: visible !important; /* allow things to be visible rather than cut off */
+  box-sizing: border-box;
+}
+
+/* Responsive: reduce big headings on small/short viewports to avoid cutoffs */
+@media screen and (max-height: 700px) {
+  .reveal h1, .reveal .title {
+    font-size: 2.4rem !important;
+  }
+  .reveal p, .reveal li {
+    font-size: 0.9rem !important;
+  }
+}
+
+.reveal .footer,
+.reveal .reveal-footer {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.75rem;
+  text-align: right;
+  z-index: 30;
+}
