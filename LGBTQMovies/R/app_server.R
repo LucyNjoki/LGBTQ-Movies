@@ -7,8 +7,7 @@
 app_server <- function(input, output, session) {
 
   filteredData <- reactive({
-    movies_data = movies_df
-    df <- movies_data  # your loaded dataset
+    df <- movies_df
 
     # Filter by keyword (assuming keyword is a column or derived from a list)
     if (input$keyword != "All") {
@@ -37,17 +36,24 @@ app_server <- function(input, output, session) {
     filteredData()  |>
       dplyr::select(overview) |>
       tidytext::unnest_tokens(word, overview) |>
-      dplyr::anti_join(tidytext::stop_words) |>
+      dplyr::anti_join(tidytext::stop_words, by = dplyr::join_by(word)) |>
       dplyr::count(word, sort = TRUE) |>
       dplyr::filter(n >= 10) |>
       dplyr::top_n(80, n)
   })
 
 
+  allData <- reactive({
+    movies_df
+  })
+
   output$movieCount <- renderUI({
+    df <- filteredData()
+    if (is.null(df) || nrow(df) == 0) df <- allData()
+
     bslib::value_box(
       title = "",
-      value = div(dplyr::n_distinct(filteredData()$title), style = "font-size: 13px;"),
+      value = div(dplyr::n_distinct(df$title), style = "font-size: 13px;"),
       showcase = bsicons::bs_icon("film", size = "1.5rem"),
       theme = "bg-secondary",
       height = "80px"
@@ -56,9 +62,12 @@ app_server <- function(input, output, session) {
 
 
   output$avgRating <- renderUI({
+    df <- filteredData()
+    if (is.null(df) || nrow(df) == 0) df <- allData()
+
     bslib::value_box(
       title = "",
-      value = div(round(mean(dplyr::n_distinct(filteredData()$vote_average), na.rm = TRUE), 2), style = "font-size: 13px;"),
+      value = div(round(mean(dplyr::n_distinct(df$vote_average), na.rm = TRUE), 2), style = "font-size: 13px;"),
       showcase = bsicons::bs_icon("fire", size = "2rem"),
       theme = "bg-secondary",
       height = "80px"
@@ -66,9 +75,12 @@ app_server <- function(input, output, session) {
   })
 
   output$popularity <- renderUI({
+    df <- filteredData()
+    if (is.null(df) || nrow(df) == 0) df <- allData()
+
     bslib::value_box(
       title = "",
-      value = div(round(mean(dplyr::n_distinct(filteredData()$popularity), na.rm = TRUE), 2), style = "font-size: 13px;"),
+      value = div(round(mean(dplyr::n_distinct(df$popularity), na.rm = TRUE), 2), style = "font-size: 13px;"),
       showcase = bsicons::bs_icon("star", size = "2rem"),
       theme = "bg-secondary",
       height = "80px"
@@ -81,6 +93,6 @@ app_server <- function(input, output, session) {
   mod_Genre_Breakdown_server("Genre_Breakdown", data = filteredData)
   mod_Top_Movies_server("Top_Movies", data = filteredData)
   mod_Language_Insights_server("Language_Insights", data = filteredData)
-  mod_chat_server("chat", data = filteredData)
+  mod_chat_server("chat")
 
 }

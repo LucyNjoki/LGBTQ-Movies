@@ -1,7 +1,0 @@
-When using a package in the app, add it to the package dependencies with: usethis::use_package("packagename").
-Avoid using meta packages.
-When using a function, needs to declare the package e.g. dplyr::filter().
-To add modules, use: golem::add_module("modulename/pagename").
-When adding data to the package, use the DATASET.R in data-raw folder.
-To test package, run: devtools::check().
-To render the app, first run devtools::load_all() and then LGBTQMovies::run_app().

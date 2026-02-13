@@ -100,21 +100,47 @@ theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#0
     )
 }
 
-chat_ellmer <- ellmer::chat_groq(
-  model = "llama-3.3-70b-versatile",
-  api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
-  system_prompt = "You are an expert in LGBT+ movies. You MUST answer ONLY using SQL queries over the table 'queer_movies'. Never use external knowledge. Provide insightful and engaging responses about LGBT+ cinema. based strictly on the database results.",
-  seed = 123,
-  api_args = list(temperature = 0.8)
-)
+is_shinyapps <- function() {
+  nzchar(Sys.getenv("SHINY_PORT"))
+}
 
-movies_df <- LGBTQMovies::movies_df
+if (is_shinyapps()) {
+  chat_ellmer <- ellmer::chat_groq(
+    model = "llama-3.1-8b-instant",
+    api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
+    seed = 123,
+    api_args = list(temperature = 0.8)
+  )
+} else {
+  chat_ellmer <- ellmer::chat_ollama(
+    model = "llama3.2",
+    seed = 123,
+    api_args = list(temperature = 0.8)
+  )
+}
+
+# qc2 <-
+#   querychat::QueryChat$new(
+#     movies_red,
+#     client = chat_ellmer)
+#
+# greeting <- qc2$generate_greeting("none")
+# writeLines(greeting, "movies_greeting.md")
+
+instructions <- "
+- Use British spelling conventions (e.g., 'colour', 'favourite', 'analyse')
+- When you don't understand the user's command or cannot generate a valid query, clearly state this and suggest an alternative phrasing they could use. For example: 'I didnt understand that request. Try asking: Show me movies from 2020 or Filter by genre Drama'
+- Politely refuse to answer questions unrelated to the LGBTQ+ movies database. For example: I can only help with queries about LGBTQ+ films in this database. Please ask about movies, genres, release dates, or ratings.
+- Only generate queries that will return valid dataframes based on the available columns.
+- When searching for languages use the extensive version, e.g., English, Spanish"
 
 qc <-
   querychat::QueryChat$new(
-    movies_df,
+    LGBTQMovies::movies_red,
     "queer_movies",
-    greeting = "What would you like to know about queer cinema?",
-    client = chat_ellmer
+    client = chat_ellmer,
+    data_description = "./data_description.md",
+    greeting = "./movies_greeting.md",
+    extra_instructions = "instructions",
+    cleanup = TRUE
     )
-
