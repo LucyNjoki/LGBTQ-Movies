@@ -26,12 +26,11 @@ mod_Language_Insights_server <- function(id, data){
 
     output$langPlot <- plotly::renderPlotly({
       p <- data() |>
-        dplyr::count(original_language) |>
+        dplyr::count(original_language_recoded) |>
         dplyr::top_n(10, n) |>
-        dplyr::mutate(original_language = stringr::str_to_upper(original_language)) |>
         ggplot2::ggplot(
           ggplot2::aes(
-            x = forcats::fct_reorder(original_language, n),
+            x = forcats::fct_reorder(original_language_recoded, n),
             y = n
           )
         ) +

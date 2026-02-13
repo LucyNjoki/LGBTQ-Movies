@@ -100,24 +100,29 @@ theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#0
     )
 }
 
-is_shinyapps <- function() {
-  nzchar(Sys.getenv("SHINY_PORT"))
-}
+# is_shinyapps <- function() {
+#   nzchar(Sys.getenv("SHINY_PORT"))
+# }
+#
+# if (is_shinyapps()) {
+#   chat_ellmer <- ellmer::chat_groq(
+#     model = "llama-3.1-8b-instant",
+#     api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
+#     seed = 123,
+#     api_args = list(temperature = 0.8)
+#   )
+# } else {
+#   chat_ellmer <- ellmer::chat_ollama(
+#     model = "llama3.2",
+#     seed = 123,
+#     api_args = list(temperature = 0.8)
+#   )
+# }
 
-if (is_shinyapps()) {
-  chat_ellmer <- ellmer::chat_groq(
-    model = "llama-3.1-8b-instant",
-    api_key = Sys.getenv("GROQ_API_KEY_LGBTQ"),
-    seed = 123,
-    api_args = list(temperature = 0.8)
-  )
-} else {
-  chat_ellmer <- ellmer::chat_ollama(
-    model = "llama3.2",
-    seed = 123,
-    api_args = list(temperature = 0.8)
-  )
-}
+chat_ellmer <- ellmer::chat_ollama(
+  model = "llama3.2",
+  seed = 123,
+  api_args = list(temperature = 0.8))
 
 # qc2 <-
 #   querychat::QueryChat$new(
