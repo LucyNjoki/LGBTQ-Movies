@@ -9,14 +9,19 @@ app_server <- function(input, output, session) {
   filteredData <- reactive({
     df <- movies_df
 
+    # Filter by year
+    range <- input$yearRange %||% c(2002, 2022)
+
+    df <- df |>
+      dplyr::filter(
+        lubridate::year(as.Date(release_date)) >= range[1],
+        lubridate::year(as.Date(release_date)) <= range[2]
+      )
+
     # Filter by keyword (assuming keyword is a column or derived from a list)
     if (input$keyword != "All") {
       df <- df |> dplyr::filter(stringr::str_detect(tolower(overview), tolower(input$keyword)))
     }
-
-    # Filter by year
-    df <- df |> dplyr::filter(lubridate::year(as.Date(release_date)) >= input$yearRange[1],
-                        lubridate::year(as.Date(release_date)) <= input$yearRange[2])
 
     # Filter adult
     if (!input$showAdult) {

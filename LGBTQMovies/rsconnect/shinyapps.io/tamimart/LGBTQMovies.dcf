@@ -5,6 +5,9 @@ account: tamimart
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 16668614
-bundleId:
+bundleId: 11576969
 url: https://tamimart.shinyapps.io/LGBTQMovies/
 version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .Rbuildignore|data/color.rda|data/movies_df.rda|data/movies_red.rda|data_description.md|data-raw/DATASET.R|data-raw/movieData.csv|DESCRIPTION|inst/app/www/favicon.ico|inst/app/www/lgbtq_movies_hex_final.png|inst/app/www/style.css|inst/golem-config.yml|movies_greeting.md|NAMESPACE|R
