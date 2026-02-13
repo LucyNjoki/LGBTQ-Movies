@@ -41,6 +41,58 @@ mod_Genre_Breakdown_server <- function(id, data){
         )
       plotly::ggplotly(p, tooltip = "y")
     })
+
+    # output$genrePlot <- renderPlotly({
+    #
+    #   genre_data <- filteredData() %>%
+    #     dplyr::count(genre_ids_recoded) %>%
+    #     dplyr::mutate(
+    #       genre = fct_reorder(genre_ids_recoded, n)
+    #     )
+    #
+    #   p <- ggplot2::ggplot(
+    #     genre_data,
+    #     ggplot2::aes(
+    #       x = genre,
+    #       y = n,
+    #       text = paste0(
+    #         "Genre: ", genre,
+    #         "<br>Count: ", n
+    #       )
+    #     )
+    #   ) +
+    #     ggplot2::geom_col(fill = "#2ecc71") +
+    #     ggplot2::coord_flip() +
+    #     ggplot2::labs(
+    #       title = "Most Common Genres",
+    #       x = NULL,      # remove axis label
+    #       y = NULL       # remove y label (since we hide axis)
+    #     ) +
+    #     theme_app() +
+    #     ggplot2::theme(
+    #       axis.title.x = element_blank(),
+    #       axis.text.x  = element_blank(),
+    #       axis.ticks.x = element_blank(),
+    #       panel.grid.minor = element_blank()
+    #     )
+    #
+    #   ggplotly(p, tooltip = "text") %>%
+    #     layout(
+    #       font = list(
+    #         family = "sans",
+    #         size = 14,
+    #         color = "black"
+    #       ),
+    #       xaxis = list(
+    #         showgrid = FALSE,
+    #         zeroline = FALSE
+    #       ),
+    #       yaxis = list(
+    #         title = ""
+    #       )
+    #     )
+    #
+    # })
   }
 )}
 

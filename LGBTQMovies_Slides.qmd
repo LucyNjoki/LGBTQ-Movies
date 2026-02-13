@@ -1,0 +1,144 @@
+---
+title: "Queer Stories Through Data: Lighting LGBTQ+ Cinema with R and Shiny"
+author: "Njoki Njuki, Tamires Martin"
+date: "2025-11-13"
+format: 
+  revealjs:
+    title-block-banner: true
+    slide-number: c/t
+    width: 1280
+    height: 720
+    max-scale: 1.5
+    footer: "[R For Play GitHub Repo](https://github.com/LucyNjokiNjuki/R-For-Play_ManchesterRUG)"
+    theme: [default, custom.scss]
+    transition: slide
+    transition-speed: slow
+    incremental: false
+    embed-resources: true
+    auto-agenda:
+      bullets: numbered
+    background-transition: fade
+    highlight-style: zenburn
+    touch: false
+    controls: true
+    center: false
+    title-slide-attributes: 
+      data-background-color: "#ffe5ec"
+      data-background-size: contain
+      data-background-opacity: "0.5"
+    echo: true
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Why This Matters
+
+Why study queer cinema with data?
+
+- Queer stories have existed since early cinema
+- Representation reflects social norms & lived realities
+- Hard to analyse at scale
+- Metadata is often incomplete or inconsistent
+
+## The Data Challenge
+
+**The problem**
+
+- No standard LGBTQ+ tagging system
+- Inconsistent metadata across platforms
+- Limited structured queer datasets
+- Hard to explore trends over time
+
+## The Metadata Problem: Inconsistent LGBTQ+ Tagging
+
+🎬 Example Film: Fried Green Tomatoes (1991)
+
+| Source        | Genre Labels                | Keywords / Tags              | Explicit LGBTQ+ Tag? |
+| ------------- | --------------------------- | ---------------------------- | -------------------- |
+| **TMDb**      | Drama                       | friendship, southern town    | ❌ Not always         |
+| **IMDb**      | Drama                       | female friendship, nostalgia | ❌ Not explicit       |
+| **Wikipedia** | LGBTQ-related film (listed) | Lesbian subtext              | ✅ Yes                |
+
+
+
+## The Dataset
+
+**Data Source**
+
+- [tidyrainbow LGBTQ+ Movie Database GitHub Repository](https://github.com/r-lgbtq/tidyrainbow/tree/main/data/LGBTQ-movie-database)
+- Curated by [Cara Cuiule](https://github.com/cacalc/tidyRainbowScratch) 
+- Derived from [TMDb](https://www.themoviedb.org/about)
+-	Covers 1882–2022
+-	Global film coverage
+
+## The Solution
+
+Introducing: LGBTQ+ Movies Explorer
+
+-	Built with R + Shiny
+-	Interactive exploration
+-	Accessible to non-coders
+-	Designed for inclusion
+
+Screenshot of app UI
+
+## Under the hood
+
+-	tidyverse → data wrangling
+-	tidytext → keyword detection
+-	ggplot2 + plotly → visualisation
+-	DT → interactive tables
+-	Chatbot integration
+-	Shiny reactive framework
+
+## Key Features
+
+- Explore trends over time
+- Genre & language breakdown
+- Thematic word clouds
+- Rating filters
+-	Chatbot assistant for film queries
+
+Live demo moment 
+
+## Chatbot Feature
+
+- Ask about a movie
+- Retrieve themes & metadata
+- Lower barrier to exploration
+- Accessible for non-technical users
+
+Screenshot of chatbot interaction
+
+## What We Learn
+
+- Growth of LGBTQ+ films over decades
+- Shifts in genre focus
+- Global language diversity
+- Recurring themes in descriptions
+
+## Why This Matters for RainbowR
+
+- Queer data visibility
+-	Open-source community work
+-	Accessible analytics
+-	Inclusive design
+
+## Future Work
+
+- Expand dataset
+- Improve NLP tagging
+- Add sentiment analysis
+- Public deployment
+
+## Closing
+
+**Data can make queer stories visible.**
+
+Thank you!!!
+
+Questions?
+
