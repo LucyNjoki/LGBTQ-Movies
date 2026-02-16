@@ -36,7 +36,7 @@ mod_Overview_ui <- function(id) {
 #' Overview Server Functions
 #'
 #' @noRd
-mod_Overview_server <- function(id, data, text_data) {
+mod_Overview_server <- function(id, text_data) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
