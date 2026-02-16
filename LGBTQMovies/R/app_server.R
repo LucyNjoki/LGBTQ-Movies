@@ -5,9 +5,11 @@
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
-  filteredData <- reactive({
+
+    filteredData <- reactive({
     df <- dplyr::collect(movies_df)
     print(paste("Initial:", nrow(df)))
+
 
     range <- if (is.null(input$yearRange)) c(2002, 2022) else input$yearRange
 
@@ -36,6 +38,7 @@ app_server <- function(input, output, session) {
     if (!is.null(input$topRated) && input$topRated) {
       df <- df |> dplyr::filter(vote_average >= 8)
       print(paste("Após topRated:", nrow(df)))
+      df
     }
 
     df
@@ -47,25 +50,29 @@ app_server <- function(input, output, session) {
 
   output$movieCount <- renderText({
     df <- filteredData_unique()
-    nrow(df) |> as.character()
+    nrow(df)
   })
 
   output$avgRating <- renderText({
     df <- filteredData_unique()
-    va <- round(mean(df$vote_average, na.rm = TRUE), 2)
+    va <- round(mean(df$vote_average, na.rm = TRUE), 2) |> as.character()
     print(va)
+    print(class(va))
     va
   })
 
   output$popularity <- renderText({
     df <- filteredData_unique()
-    p <- round(mean(df$popularity, na.rm = TRUE), 2)
+    p <- round(mean(df$popularity, na.rm = TRUE), 2) |> as.numeric()
     print(p)
+    print(class(p))
     p
   })
 
+
   # Reactive text data
   textData <- reactive({
+    req(filteredData())
     filteredData() |>
       dplyr::select(overview) |>
       tidytext::unnest_tokens(word, overview) |>
