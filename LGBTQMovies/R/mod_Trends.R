@@ -48,10 +48,10 @@ mod_Trends_server <- function(id, data){
         ggplot2::geom_point(data = max_row, colour = "deeppink", size = 3, alpha = 0.9) +
         ggplot2::geom_text(
           data = max_row,
-          aes(label = paste0("Max: ", round(n, 2), " (", year, ")")),
+          ggplot2::aes(label = paste0("Max: ", round(n, 2), " (", year, ")")),
           vjust = 0.5,
           hjust = 1.1,
-          size = 4,
+          size = 5,
           colour = "deeppink",
           fontface = "bold"
         ) +
@@ -75,10 +75,10 @@ mod_Trends_server <- function(id, data){
           ggplot2::geom_point(data = max_row, colour = "deeppink", size = 3, alpha = 0.9) +
               ggplot2::geom_text(
                 data = max_row,
-                aes(label = paste0("Max: ", round(avg_rating, 2), "(", year, ")")),
+                ggplot2::aes(label = paste0("Max: ", round(avg_rating, 2), " (", year, ")")),
                 vjust = 0.5,
                 hjust = -0.1,
-                size = 4,
+                size = 5,
                 colour = "deeppink",
                 fontface = "bold"
               ) +

@@ -28,7 +28,7 @@ app_server <- function(input, output, session) {
       print(paste("After keyword:", nrow(df)))
     }
 
-    if (!is.null(input$showAdult) && !input$showAdult) {
+    if (isFALSE(input$showAdult)) {
       df <- df |> dplyr::filter(adult == FALSE)
       print(paste("After adult:", nrow(df)))
     }
@@ -47,21 +47,21 @@ app_server <- function(input, output, session) {
 
   output$movieCount <- renderText({
     df <- filteredData_unique()
-    nrow(df)
+    nrow(df) |> as.character()
   })
 
   output$avgRating <- renderText({
     df <- filteredData_unique()
     va <- round(mean(df$vote_average, na.rm = TRUE), 2)
     print(va)
-    return(va)
+    va
   })
 
   output$popularity <- renderText({
     df <- filteredData_unique()
     p <- round(mean(df$popularity, na.rm = TRUE), 2)
     print(p)
-    return(p)
+    p
   })
 
   # Reactive text data
