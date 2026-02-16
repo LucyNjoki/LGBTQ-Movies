@@ -40,41 +40,41 @@ theme_custom <- function(
     caption_face    = "italic"
 ) {
   # Base theme to build upon
-  th <- theme_bw(base_size = base_size, base_family = base_family) +
-    theme(
+  th <- ggplot2::theme_bw(base_size = base_size, base_family = base_family) +
+    ggplot2::theme(
       # Plot-level
-      plot.background = element_rect(fill = plot_background, colour = NA),
-      panel.background = element_rect(fill = panel_fill, colour = NA),
-      plot.title = element_text(size = rel(1.15), face = plot_title_face, margin = margin(b = 6)),
-      plot.subtitle = element_text(size = rel(0.95), face = subtitle_face, margin = margin(b = 6)),
-      plot.caption = element_text(size = rel(0.75), face = caption_face, hjust = 1, margin = margin(t = 6)),
-      plot.margin = margin(10, 10, 10, 10),
+      plot.background = ggplot2::element_rect(fill = plot_background, colour = NA),
+      panel.background = ggplot2::element_rect(fill = panel_fill, colour = NA),
+      plot.title = ggplot2::element_text(size = ggplot2::rel(1.15), face = plot_title_face, margin = ggplot2::margin(b = 6)),
+      plot.subtitle = ggplot2::element_text(size = ggplot2::rel(0.95), face = subtitle_face, margin = ggplot2::margin(b = 6)),
+      plot.caption = ggplot2::element_text(size = ggplot2::rel(0.75), face = caption_face, hjust = 1, margin = ggplot2::margin(t = 6)),
+      plot.margin = ggplot2::margin(10, 10, 10, 10),
 
       # Axes
-      axis.title = element_text(size = axis_title_size, face = "bold"),
-      axis.title.y = element_text(angle = 90, vjust = 2),
-      axis.title.x = element_text(vjust = -0.5),
-      axis.text = element_text(size = axis_text_size),
+      axis.title = ggplot2::element_text(size = axis_title_size, face = "bold"),
+      axis.title.y = ggplot2::element_text(angle = 90, vjust = 2),
+      axis.title.x = ggplot2::element_text(vjust = -0.5),
+      axis.text = ggplot2::element_text(size = axis_text_size),
 
       # Panel & grid
-      panel.grid.major = if (grid_major) element_line(color = grid_color, linewidth = 0.3) else element_blank(),
-      panel.grid.minor = if (grid_minor) element_line(color = grid_color, linewidth = 0.15) else element_blank(),
-      panel.border = if (panel_border) element_rect(fill = NA, colour = "grey80") else element_blank(),
+      panel.grid.major = if (grid_major) ggplot2::element_line(color = grid_color, linewidth = 0.3) else ggplot2::element_blank(),
+      panel.grid.minor = if (grid_minor) ggplot2::element_line(color = grid_color, linewidth = 0.15) else ggplot2::element_blank(),
+      panel.border = if (panel_border) ggplot2::element_rect(fill = NA, colour = "grey80") else ggplot2::element_blank(),
 
       # Legend
-      legend.background = element_rect(fill = NA, colour = NA),
-      legend.key = element_rect(fill = NA, colour = NA),
-      legend.text = element_text(size = legend_size),
-      legend.title = element_blank(),
+      legend.background = ggplot2::element_rect(fill = NA, colour = NA),
+      legend.key = ggplot2::element_rect(fill = NA, colour = NA),
+      legend.text = ggplot2::element_text(size = legend_size),
+      legend.title = ggplot2::element_blank(),
       legend.position = legend_position,
 
       # Facets
-      strip.background = element_rect(fill = "grey95", colour = NA),
-      strip.text = element_text(size = strip_text_size, face = "bold"),
+      strip.background = ggplot2::element_rect(fill = "grey95", colour = NA),
+      strip.text = ggplot2::element_text(size = strip_text_size, face = "bold"),
 
       # Lines / points default tweak
-      axis.ticks = element_blank(),
-      panel.spacing = unit(0.5, "lines")
+      axis.ticks = ggplot2::element_blank(),
+      panel.spacing = ggplot2::unit(0.5, "lines")
     )
 
   # Return theme
@@ -84,13 +84,13 @@ theme_custom <- function(
 # Optional: a dark variant
 theme_custom_dark <- function(..., panel_fill = "#000000", plot_background = "#000000", grid_color = "#2b2b2b") {
   theme_custom(..., panel_fill = panel_fill, plot_background = plot_background, grid_color = grid_color) +
-    theme(
-      text = element_text(colour = "white"),
-      axis.text = element_text(colour = "white"),
-      axis.title = element_text(colour = "white"),
-      panel.grid.major = element_line(color = grid_color),
-      panel.grid.minor = element_line(color = grid_color),
-      panel.background = element_rect(fill = panel_fill, color = panel_fill),
-      plot.background  = element_rect(fill = plot_background, color = plot_background)
+    ggplot2::theme(
+      text = ggplot2::element_text(colour = "white"),
+      axis.text = ggplot2::element_text(colour = "white"),
+      axis.title = ggplot2::element_text(colour = "white"),
+      panel.grid.major = ggplot2::element_line(color = grid_color),
+      panel.grid.minor = ggplot2::element_line(color = grid_color),
+      panel.background = ggplot2::element_rect(fill = panel_fill, color = panel_fill),
+      plot.background  = ggplot2::element_rect(fill = plot_background, color = plot_background)
     )
 }

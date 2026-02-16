@@ -32,7 +32,7 @@ mod_Genre_Breakdown_server <- function(id, data){
         ggplot2::geom_col(fill = color[[6]]) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.01, 0.1))) +
         ggplot2::coord_flip() +
-        ggplot2::labs(title = "Most Common Genres", x = NULL, y = NULL) +
+        ggplot2::labs(title = "Most common genres", x = NULL, y = NULL) +
         theme_custom_dark(base_size = 13, legend_position = "none", base_family = "inter", grid_major = FALSE) +
         ggplot2::theme(
           axis.text.x = ggplot2::element_blank(),

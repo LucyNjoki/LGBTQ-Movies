@@ -75,28 +75,28 @@ app_ui <- function(request) {
             tabPanel(
               "Overview",
               br(),
-              # bslib::layout_column_wrap(
-              #   width = 1 / 3,
-              #   height = "100px",
-              #   bslib::value_box(
-              #     title = "",
-              #     value = textOutput("movieCount"),
-              #      showcase = bsicons::bs_icon("film"),
-              #      showcase_layout = "top right"
-              #   ),
-              #   bslib::value_box(
-              #     title = "",
-              #     value = textOutput("avgRating"),
-              #     showcase = bsicons::bs_icon("star"),
-              #     showcase_layout = "top right"
-              #   ),
-              #   bslib::value_box(
-              #     title = "",
-              #     value = textOutput("popularity"),
-              #     showcase = bsicons::bs_icon("fire"),
-              #     showcase_layout = "top right"
-              #   )
-              # ),
+              bslib::layout_column_wrap(
+                width = 1 / 3,
+                height = "80px",
+                bslib::value_box(
+                  title = "",
+                  value = 12, #textOutput("movieCount"),
+                   showcase = bsicons::bs_icon("film", size = "2em"),
+                   showcase_layout = "top right"
+                ),
+                bslib::value_box(
+                  title = "",
+                  value = textOutput("avgRating"),
+                  showcase = bsicons::bs_icon("star", size = "2em"),
+                  showcase_layout = "top right"
+                ),
+                bslib::value_box(
+                  title = "",
+                  value = textOutput("popularity"),
+                  showcase = bsicons::bs_icon("fire", size = "2em"),
+                  showcase_layout = "top right"
+                )
+              ),
               mod_Overview_ui("Overview"),
               br()
             ),

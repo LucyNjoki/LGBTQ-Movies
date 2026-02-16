@@ -20,7 +20,7 @@
 
 # create chat with local model
 chat_ellmer <- ellmer::chat_ollama(
-  model = "llama3.2",
+  model = "qwen2.5", #"llama3.2",
   seed = 123,
   api_args = list(temperature = 0.8))
 
