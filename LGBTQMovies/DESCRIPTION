@@ -24,6 +24,7 @@ Imports:
     rio,
     shiny,
     shinydashboard,
+    showtext,
     showtextdb,
     sysfonts,
     tidyr,
