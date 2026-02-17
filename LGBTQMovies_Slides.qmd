@@ -125,7 +125,7 @@ Why study <span class="pride-inline">queer cinema</span> with data?
 Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 
 - **Reactive Shiny** dashboard built in R  
-- **Interactive** filtering across time, genre, and language  
+- Filtering across LGBTQ+ terminologies, movie release year...
 - Conversational **chatbot** for film queries  
 - Supports **inclusive**, community-focused data access  
 - Makes 140+ years of queer cinema explorable in seconds  
@@ -245,7 +245,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 📊 Representation Trends
 
 - 📈 Growth over time  
-- 🎭 Dramatic storytelling dominates)  
+- 🎭 Dramatic storytelling dominates  
 - 🌍 English language dominance  
 - 📝 Thematic patterns  
 :::
@@ -255,7 +255,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 ::: {.col-box-green-short}
 🛠 Technical Skills
 
-- Built with **golem** (Modular architecture)  
+- Built with **golem** (modular architecture)  
 - Designed and generated project logo in R  
 - Integrated **chatbot**  
  
@@ -266,6 +266,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 
 ## Why This Matters for RainbowR
 
+<br>
 <br>
 
 ::: {.columns}
@@ -282,29 +283,14 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 :::
 :::
 
-::: {.column width="33%"}
-::: {.col-box-green-short}
-📊 **Accessible analytics**
-:::
-:::
-
-:::
-
-::: {.columns}   
-
 ::: {.column width="34%"}
 ::: {.col-box-yellow-short}
-🎨 **Inclusive design**
-:::
-:::
-
-::: {.column width="34%"}
-::: {.col-box-pink-short}
-💜 **Buddy Scheme — community impact in action**
+💜 **Buddy Scheme: community impact in action**
 :::
 :::
 
 :::
+
 
 
 ## Future Work
