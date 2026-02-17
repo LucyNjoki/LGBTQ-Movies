@@ -1,111 +1,458 @@
 /*-- scss:defaults --*/
 
-// fonts
-$font-family-sans-serif: "Raleway", "Gill Sans", "Trebuchet MS", sans-serif;
+/* Optional: custom font imports */
+@import url("https://fonts.googleapis.com/css?family=Figtree:400,700&display=swap");
 
+/* Theme variables */
+$font-family-sans-serif: "Figtree", Helvetica, sans-serif !default;
 
-// colors
-$body-bg: #ffe5ec !default;
-$body-color: #000 !default;
-$link-color: #6a1b9a; /* purple accent */
-$selection-bg: #26351c !default;
-$code-color: #444;
-
-// headings
-$presentation-heading-font: "Palatino Linotype", "Book Antiqua", Palatino,
-  FreeSerif, serif !default;
-$presentation-heading-color: #1E2A38 !default;; /* navy contrast */
-$presentation-h2-font-size: 1.2em;
-$presentation-h3-font-size: 1.0em;
+/* RainbowR / theme colours */
+$red: #FF4239;
+$orange: #FF6B00;
+$yellow: #FFC843;
+$green: #09CE7C;
+$blue: #02B3E3;
+$pink: #DA3AB3;
+$purple: #DA3AB3;
+$very-dark-blue: #000D33;
+$link-color: #02B3E3;
 
 /*-- scss:rules --*/
 
+/* ============================================================
+   GLOBAL: Dark deck, headings, base text size (min 28pt)
+   ============================================================ */
+
+/* Ensure entire deck uses dark background and white text */
+.reveal {
+  background-color: $very-dark-blue !important;
+  color: #ffffff !important;
+  font-family: $font-family-sans-serif;
+}
+
+/* Headings in yellow (strong) */
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  color: $yellow !important;
+  font-weight: 300;
+  /* slightly larger heading scaling for hierarchy */
+}
+
+/* Minimum readable font size (~28pt) for body + list items + inline code */
+.reveal p,
+.reveal li,
+.reveal blockquote,
+.reveal table td,
+.reveal table th {
+  font-size: 1.75rem !important; /* ~28px depending on export scale */
+  line-height: 1.35;
+  color: #ffffff !important;
+}
+
+/* Inline code should also be readable */
+.reveal code,
+.reveal pre {
+  font-size: 1.75rem !important;
+  color: #ffffff !important;
+  background-color: rgba(255,255,255,0.02);
+  padding: 0.06em 0.3em;
+  border-radius: 6px;
+}
+
+/* Links on dark background */
 .reveal a {
-  line-height: 1.4em;
+  color: $blue !important;
+  text-decoration: underline;
 }
 
-.quarto-title-author-name {
-  font-size: 25px;  /* Customize the author font size */
-  color: #450920 !important;
+/* Bullets spacing */
+.reveal ul, .reveal ol {
+  margin-bottom: 0.9rem;
 }
 
-.title {
-  font-size: 48px !important;
-  color: #450920 !important;
+/* ============================================================
+   IMPORTANT CALLOUT — red header + white body (used left)
+   ============================================================ */
+
+.reveal .callout.callout-important.callout-style-default {
+  border: 2px solid darken($red, 8%);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 78%; /* can be overridden by column widths */
+
+  /* Header bar */
+  .callout-title {
+    background-color: rgba(255, 66, 57, 0.12) !important;
+    color: $very-dark-blue !important;
+    font-weight: 700;
+    padding: 0.65rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  /* Body — white area for contrast */
+  .callout-body,
+  .callout-content,
+  .callout-description {
+    background-color: rgba(255, 66, 57, 0.12) !important;
+    color: $very-dark-blue !important;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.12rem; /* inner callout text — slightly smaller than slide text */
+    line-height: 1.35;
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* ensure lists inside callout are dark text */
+  .callout-body ul, .callout-body li {
+    color: $very-dark-blue !important;
+  }
 }
 
-.subtitle {
-  font-size: 35px !important;
-  color: #450920 !important;
+/* Small safeguard in case Quarto outputs nested structure differently */
+.reveal .slide .callout.callout-important .callout-body {
+  background-color: rgba(255, 66, 57, 0.12) !important;
+  color: $very-dark-blue !important;
 }
 
-.date {
-  font-size: 20px !important;
-  color: #450920 !important;
+/* ============================================================
+   PRIDE INLINE / GRADIENT STYLES (text-only gradients)
+   ============================================================ */
+
+.pride-inline,
+.pride-gradient {
+  background: linear-gradient(
+    90deg,
+    #ff3b30 0%,
+    #ff8c00 18%,
+    #ffd400 36%,
+    #09ce7c 54%,
+    #02b3e3 72%,
+    #7b2cff 90%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+  display: inline-block;
+  line-height: 1;
+  /* Slightly lighter text-shadow for clarity on both dark and white backgrounds */
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.15);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Top-align slides and reduce padding so there's less empty space */
-.reveal .slides section {
-  display: block;            /* no more vertical centering */
-  padding: 1rem 2rem 1.2rem; /* smaller top/bottom padding so content fits */
+/* Fallback for PDF / PPT where background-clip not supported */
+@supports not (-webkit-background-clip: text) {
+  .pride-inline,
+  .pride-gradient {
+    color: $blue !important;
+    background: none !important;
+    text-shadow: none !important;
+  }
+}
+
+/* ============================================================
+   PANEL / CANVAS for image collage (right-side black canvas)
+   ============================================================ */
+
+.panel-right {
+  background-color: #000000;
+  border-radius: 10px;
+  padding: 12px;
   box-sizing: border-box;
-  overflow: visible;
-  text-align: left;            /* left-align content (more typical for bullets) */
-}
-
-/* Wrap slide content so headings + bullets occupy natural vertical flow */
-.reveal .slides section > * {
-  margin-top: 0.22rem;
-  margin-bottom: 0.6rem;
-}
-
-/* Limit text container width so text lines wrap nicely and fill area */
-.reveal .slides section .content,
-.reveal .slides section .container {
-  max-width: 820px;
-  margin: 0;
-}
-
-/* Make lists use a bit more compact spacing */
-.reveal ul,
-.reveal ol {
-  font-size: 0.9em;  /* slightly larger if needed */
-  line-height: 1.25em;
-  margin-bottom: 0.6em;
-}
-
-/* If you still want some vertical centering on the title slide only */
-.reveal .slides section.title-slide {
+  border: 8px solid rgba(255,255,255,0.06);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+  min-height: 280px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-/* Prevent visual clipping and reduce extra padding */
-.reveal,
-.reveal .slides {
-  height: auto !important;
-  min-height: 100% !important;
-  overflow: visible !important; /* allow things to be visible rather than cut off */
+/* Grid inside the black canvas for multiple images / posters */
+.panel-right .image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+}
+
+/* small caption boxes on black canvas (yellow border) */
+.panel-right .caption-box {
+  border: 2px solid $yellow;
+  color: $yellow;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+/* make poster images rounder inside grid where needed */
+.panel-right .image-grid img {
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* responsive: stack grid to 2 columns on small screens */
+@media screen and (max-width: 900px) {
+  .panel-right .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================================
+   RAINBOWR IMPACT BOXES — DARK BLUE TEXT VERSION
+   ============================================================ */
+
+/* Core colours */
+$purple: #DA3AB3;
+$blue: #02B3E3;
+$green: #09CE7C;
+$yellow: #FFC843;
+$pink: #DA3AB3;
+$very-dark-blue: #000D33;
+
+/* Base box style */
+.impact-box {
+  border-radius: 22px;
+  padding: 26px 24px;
+  text-align: left;
+  font-weight: 700;
   box-sizing: border-box;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  font-size: 1.85rem;
+  line-height: 1.2;
+  color: $very-dark-blue !important;
 }
 
-/* Responsive: reduce big headings on small/short viewports to avoid cutoffs */
-@media screen and (max-height: 700px) {
-  .reveal h1, .reveal .title {
-    font-size: 2.4rem !important;
-  }
-  .reveal p, .reveal li {
-    font-size: 0.9rem !important;
+/* Apply base style to all short boxes */
+.col-box-purple-short,
+.col-box-blue-short,
+.col-box-green-short,
+.col-box-yellow-short,
+.col-box-pink-short {
+  @extend .impact-box;
+}
+
+/* Background colours */
+.col-box-purple-short { background-color: $purple; }
+.col-box-blue-short   { background-color: $blue; }
+.col-box-green-short  { background-color: $green; }
+.col-box-yellow-short { background-color: $yellow; }
+.col-box-pink-short   { background-color: $pink; }
+
+/* Force dark blue text inside (override global white rule) */
+.col-box-purple-short,
+.col-box-blue-short,
+.col-box-green-short,
+.col-box-yellow-short,
+.col-box-pink-short,
+.col-box-purple-short p,
+.col-box-purple-short li,
+.col-box-blue-short p,
+.col-box-blue-short li,
+.col-box-green-short p,
+.col-box-green-short li,
+.col-box-yellow-short p,
+.col-box-yellow-short li,
+.col-box-pink-short p,
+.col-box-pink-short li {
+  color: $very-dark-blue !important;
+}
+
+/* Clean bullet spacing */
+.col-box-purple-short ul,
+.col-box-blue-short ul,
+.col-box-green-short ul,
+.col-box-yellow-short ul,
+.col-box-pink-short ul {
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+  padding-left: 1.2rem;
+}
+
+
+
+/* ============================================================
+   Under-the-hood logo grid & general logos display
+   ============================================================ */
+
+.logo-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.reveal .columns img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* A denser logo grid option for the under-the-hood slide */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+}
+@media screen and (max-width: 900px) {
+  .logo-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.reveal .footer,
-.reveal .reveal-footer {
+/* ============================================================
+   Future Work row (icons + captions)
+   ============================================================ */
+
+.future-work-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.0rem 2rem;
+}
+
+/* single item */
+.future-work-item {
+  width: 22%;
+  min-width: 140px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+/* icon styles (use <img class="future-icon">) */
+.future-icon {
+  width: 96px;
+  height: 96px;
+  display: block;
+  object-fit: contain;
+}
+
+/* caption text - change to white for dark deck */
+.future-caption {
+  font-size: 1.95rem;
+  font-weight: 600;
+  color: #ffffff;    /* visible on dark deck */
+  margin: 0;
+  line-height: 1.25;
+  max-width: 220px;
+}
+
+/* responsive adjustments */
+@media screen and (max-width: 900px) {
+  .future-work-row { flex-direction: column; gap: 1.25rem; padding: 0.6rem 1rem; }
+  .future-work-item { width: 100%; min-width: auto; flex-direction: row; align-items: center; gap: 1rem; }
+  .future-icon { width: 56px; height: 56px; }
+  .future-caption { font-size: 1.25rem; text-align: left; }
+}
+
+/* ============================================================
+   Footer rainbow bar & other niceties
+   ============================================================ */
+.rainbow-bar {
+  height: 6px;
+  background: linear-gradient(90deg, #ff3b30, #ff8c00, #ffd400, #09ce7c, #02b3e3, #7b2cff);
+  border-radius: 4px;
+  margin: 20px auto;
+  width: 100%;
+}
+
+/* footer link colour */
+.reveal .reveal-footer a { color: $link-color !important; }
+
+.pride-title {
+  background: linear-gradient(
+    90deg,
+    #ff3b30 0%,
+    #ff8c00 18%,
+    #ffd400 36%,
+    #09ce7c 54%,
+    #02b3e3 72%,
+    #7b2cff 90%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+/* Two-author layout */
+
+.social-links {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  align-items: flex-start;
+  text-align: center;
+}
+
+.author-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+}
+
+.author-block a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.author-block a:hover {
+  color: #02B3E3;  /* rainbowR blue */
+}
+
+/*.reveal .slide-logo {
+  width: 100px !important;
+  height: 80px !important;
+}*/
+
+/* Reduce title slide background image visibility */
+#title-slide::before {
+  content: "";
   position: absolute;
-  right: 1rem;
-  bottom: 0.75rem;
-  text-align: right;
-  z-index: 30;
+  inset: 0;
+  background: rgba(0, 13, 51, 0.85);
+  z-index: 0;
 }
+
+#title-slide .quarto-title-authors {
+  font-size: 1.6rem;
+  opacity: 0.95;
+}
+
+
+
+/* Ensure title content stays above overlay */
+#title-slide .quarto-title-block,
+#title-slide h1,
+#title-slide h2,
+#title-slide p {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+/*-- scss:uses --*/
