@@ -12,12 +12,12 @@ format:
     footer: "[LGBTQ+ Movies GitHub Repo](https://github.com/LucyNjokiNjuki/LGBTQ-Movies)"
     theme: [default, custom.scss]
     transition: slide
+    background-transition: fade
     transition-speed: slow
     incremental: false
     embed-resources: true
     auto-agenda:
       bullets: numbered
-    background-transition: fade
     highlight-style: zenburn
     touch: false
     controls: true
@@ -279,7 +279,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 
 ::: {.column width="33%"}
 ::: {.col-box-blue-short}
-🤝 **Open-source collaboration**
+🌐 **Open-source collaboration**
 :::
 :::
 
@@ -302,7 +302,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 ::: {.future-work-row}
 
 ::: {.future-work-item}
-<div class="future-icon" style="font-size:80px; line-height:1;">🗄️</div>
+<div class="future-icon" style="font-size:80px; line-height:1;">🗄️️</div>
 <p class="future-caption">Expand dataset</p>
 :::
 
@@ -357,8 +357,5 @@ Thank you 💛
 </div>
 
 </div>
-
-
-
 
 
