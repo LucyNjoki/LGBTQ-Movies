@@ -94,6 +94,8 @@ Why study <span class="pride-inline">queer cinema</span> with data?
 
 ## The Dataset
 
+<br>
+
 ::::: columns
 ::: {.column width="60%" style="font-size: 60%;"}
 
@@ -237,6 +239,8 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 
 ## What We Learn
 
+<br>
+
 ::: {.columns}
 
 ::: {.column width="50%"}
@@ -264,7 +268,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 
 :::
 
-## Why This Matters for RainbowR
+## Why This Matters for rainbowR
 
 <br>
 <br>
@@ -279,7 +283,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 
 ::: {.column width="33%"}
 ::: {.col-box-blue-short}
-🌐 **Open-source collaboration**
+🧩 **Open-source collaboration**
 :::
 :::
 
