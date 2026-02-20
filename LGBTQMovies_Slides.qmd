@@ -50,7 +50,7 @@ Why study <span class="pride-inline">queer cinema</span> with data?
 :::
 
 - Queer stories have existed since early cinema
-- Representation reflects social norms & lived realities
+- Representation reflects social norms and lived realities
 - Metadata is often incomplete
 
 :::
@@ -77,8 +77,8 @@ Why study <span class="pride-inline">queer cinema</span> with data?
 
 - The tidyrainbow dataset is openly available
 - It is structured and reproducible
-- But it is distributed as a large spreadsheet-style dataset
-- Exploring trends requires software skills
+- It is distributed as a large spreadsheet-style dataset
+- Exploring trends in this format requires software skills
 - Interactive exploration is **not easily accessible**
 
 > Open data does not automatically mean accessible data.
@@ -108,7 +108,7 @@ Why study <span class="pride-inline">queer cinema</span> with data?
 
 - [tidyrainbow LGBTQ+ Movie Database GitHub Repository](https://github.com/r-lgbtq/tidyrainbow/tree/main/data/LGBTQ-movie-database)
 - Curated by [Cara Cuiule](https://github.com/cacalc/tidyRainbowScratch) 
-- Derived from [TMDb](https://www.themoviedb.org/about)
+- Derived from [TMDB](https://www.themoviedb.org/about)
 -	Covers 1882–2022
 -	Global film coverage
 
@@ -145,7 +145,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 :::
 
 
-## Under the hood
+## Under the Hood
 
 ::: {.columns}
 
@@ -195,7 +195,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 ::: {.column width="45%"}
 
 - Explore trends over time
-- Genre & language breakdown
+- Genre and language breakdown
 - Thematic word clouds
 - Rating filters
 -	Chatbot assistant for film queries
@@ -219,7 +219,7 @@ Introducing: <span class="pride-gradient">LGBTQ+</span> Movies Explorer
 <div style="font-size: 0.95em;">
 
 - **Ask** about a movie  
-- Retrieve **themes** & **metadata**  
+- Retrieve **themes** and **metadata**  
 - Lower barrier to **exploration**  
 - **Accessible** for non-technical users
 
