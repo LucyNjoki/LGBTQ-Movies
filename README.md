@@ -25,7 +25,7 @@ The app enables users to:
 
 This application follows the **{golem}** framework for Shiny apps and uses **{renv}** to ensure reproducible package versions.
 
-### 1️⃣ Clone the repository
+1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/LucyNjoki/LGBTQ-Movies.git
