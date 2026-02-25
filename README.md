@@ -8,7 +8,7 @@
 
 🌈 **LGBTQ+ Movies Explorer** is an interactive Shiny application built in R to explore patterns of LGBTQ+ representation in global cinema.
 
-Using the openly available [**tidyrainbow LGBTQ+ Movie Database**](https://github.com/r-lgbtq/tidyrainbow/tree/main/data/LGBTQ-movie-database) (derived from [TMDb](https://www.themoviedb.org/about) metadata),  
+Using the openly available [**tidyrainbow LGBTQ+ Movie Database**](https://github.com/r-lgbtq/tidyrainbow/tree/main/data/LGBTQ-movie-database) (derived from [TMDb](https://www.themoviedb.org/about) metadata) 
 
 Data curated by: [Cara Cuiule](https://github.com/cacalc/tidyRainbowScratch)
 
