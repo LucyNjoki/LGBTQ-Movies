@@ -1,4 +1,4 @@
-/*-- scss:defaults --*/
+/*-- scss: defaults to be run --*/
 
 /* Optional: custom font imports */
 @import url("https://fonts.googleapis.com/css?family=Figtree:400,700&display=swap");
@@ -453,6 +453,17 @@ $very-dark-blue: #000D33;
   z-index: 1;
 }
 
+/* GIF source attribution */
+.gif-source {
+  text-align: center;
+  font-size: 0.001rem;
+  margin-top: 0.2rem;
+  color: #cccccc; /* light grey for subtlety */
+}
 
+.gif-source a {
+  color: #02B3E3; /* your blue link colour */
+  text-decoration: underline;
+}
 
 /*-- scss:uses --*/
