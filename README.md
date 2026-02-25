@@ -17,7 +17,35 @@ The app enables users to:
 - 📈 Explore trends in queer storytelling over time  
 - 🎭 Analyse genre and language patterns  
 - 📝 Identify recurring themes in film descriptions  
-- 💬 Interact with the dataset through a conversational chatbot interface  
+- 💬 Interact with the dataset through a conversational chatbot interface
+
+---
+
+## 🚀 How to Run Locally
+
+This application follows the **{golem}** framework for Shiny apps and uses **{renv}** to ensure reproducible package versions.
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/LucyNjoki/LGBTQ-Movies.git
+cd LGBTQ-Movies
+```
+
+2️⃣ Install dependencies
+
+Open the project in RStudio and run:
+
+```r
+install.packages("renv")   # if not already installed
+renv::restore()            # installs exact package versions from renv.lock
+```
+
+3️⃣ Run the application
+
+```r
+devtools::load_all(".") # to run the app
+```
 
 ---
 
@@ -35,3 +63,5 @@ If you’re interested in:
 - Exploring new research directions  
 
 Please feel free to open an issue or get in touch ✨
+
+
