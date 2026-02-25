@@ -88,6 +88,11 @@ Why study <span class="pride-inline">queer cinema</span> with data?
 ::: {.column width="50%"}
 
 ![](Images\scrolling_excel.gif){fig-align="center" width="85%"}
+
+<p class="gif-source">
+Source: <a href="https://giphy.com/gifs/mmhmmsocial-ahhhh-zoom-takeover-too-many-sheets-XC1Lqj7rtyYeQ48TuH">"Too Many Sheets" GIF by mmhmmsocial (via GIPHY)</a>
+</p>
+
 :::
 :::::
 
@@ -100,6 +105,11 @@ Why study <span class="pride-inline">queer cinema</span> with data?
 ::: {.column width="60%" style="font-size: 60%;"}
 
 ![](Images\data.gif){fig-align="center" width="60%"}
+
+<p class="gif-source">
+Source: <a href="https://giphy.com/gifs/rainbow-computer-data-UEGwYCVTBFa9tJEf66">"Rainbow Computer Data" by Giflytics (via GIPHY)</a>
+</p>
+
 :::
 
 ::: {.column width="40%" style="font-size: 70%;"}
