@@ -1,0 +1,34 @@
+RENV SETUP INSTRUCTIONS
+========================
+
+Step 1: Install renv (if not already installed)
+install.packages("renv")
+
+Step 2: Initialize renv in the project
+library(renv)
+renv::init()
+
+  - Choose option 2 (implicit mode) to scan all project files
+    OR
+  - Choose option 1 (explicit mode) if using a DESCRIPTION file
+
+Step 3: Install the local package (if this project is a package)
+renv::install(".")
+
+Step 4: Check project status
+renv::status()
+
+Step 5: Snapshot the environment to create/update renv.lock
+renv::snapshot()
+
+Step 6: Commit to version control:
+  - renv.lock
+  - .Rprofile
+  - renv/activate.R
+
+Do NOT commit:
+  - renv/library/
+
+For collaborators:
+  install.packages("renv")
+  renv::restore()
