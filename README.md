@@ -32,7 +32,7 @@ git clone https://github.com/LucyNjoki/LGBTQ-Movies.git
 cd LGBTQ-Movies
 ```
 
-2️⃣ Install dependencies
+2️⃣ Restore the project library (install exact package versions recorded in `renv.lock`):
 
 Open the project in RStudio and run:
 
@@ -41,12 +41,17 @@ install.packages("renv")   # if not already installed
 renv::restore()            # installs exact package versions from renv.lock
 ```
 
-3️⃣ Run the application
+3️⃣ Load the application as a package
 
 ```r
-devtools::load_all(".") # to run the app
+devtools::load_all(".") # to load the app as a package
 ```
 
+4️⃣ Run the application
+
+```r
+run_app() # to run the app
+```
 ---
 
 ## 🌐 Collaboration
