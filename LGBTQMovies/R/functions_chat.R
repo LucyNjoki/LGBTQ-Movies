@@ -19,10 +19,21 @@
 # }
 
 # create chat with local model
-chat_ellmer <- ellmer::chat_ollama(
-  model = "qwen2.5", #"llama3.2",
-  seed = 123,
-  api_args = list(temperature = 0.8))
+# run in your project root (or set project = "path/to/golem")
+chat_ellmer <- tryCatch(
+  ellmer::chat_ollama(
+    model = "qwen2.5",
+    api_args = list(temperature = 0.8)
+  ),
+  error = function(e) {
+    message(
+      "Model not available.\n",
+      "Install it with: ollama pull qwen2.5\n",
+      "Or change to a model installed on your machine."
+    )
+    return(NULL)
+  }
+)
 
 # create greeting once
 # qc2 <-
